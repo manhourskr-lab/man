@@ -1,0 +1,1179 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MANHOUR 만아워</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Noto+Sans+KR:wght@300;400;500&family=Noto+Serif+KR:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* Layout idea: logo + nav on brand green (#002e17), a looping video band under the nav that changes per menu, then an Ennismore-style editorial stack; the MANHOUR mark is cropped large into the About header. */
+:root {
+  --paper: #f0ede7;
+  --paper-2: #e6e2da;
+  --deep: #001f0f;
+  --brand: #002e17;
+  --mint: #b8e0c6;
+  --ink: #14211a;
+  --muted: #566259;
+  --line: #cdc8bd;
+  --teal: #002e17;
+  --gold: #14663a;
+  --on-dark: #eef3ec;
+  --on-dark-muted: #a9c2b2;
+  --f-display: "Cormorant Garamond", "Noto Serif KR", Georgia, serif;
+  --f-ko-serif: "Noto Serif KR", serif;
+  --f-body: "Noto Sans KR", system-ui, -apple-system, "Segoe UI", sans-serif;
+  color-scheme: light;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+/* PC layout: designed for a 1280px wide screen; narrower windows scale the whole page down instead of reflowing. */
+body { min-width: 1280px; overflow-x: hidden; }
+body { background: var(--paper); color: var(--ink); font-family: var(--f-body); font-weight: 300; font-size: 16px; line-height: 1.75; -webkit-font-smoothing: antialiased; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; color: inherit; }
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+.dark a:focus-visible, .dark button:focus-visible { outline-color: var(--gold); }
+.wrap { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+
+/* bilingual pairs: English first, Korean beneath */
+.en { display: block; }
+.ko { display: block; font-family: var(--f-body); }
+.pair .ko { color: var(--muted); }
+.dark .pair .ko { color: var(--on-dark-muted); }
+h1, h2, h3 { text-wrap: balance; font-weight: 400; }
+h1 .en, h2 .en { font-family: var(--f-display); font-style: italic; line-height: 1.08; }
+h1 .ko, h2 .ko { font-family: var(--f-ko-serif); font-weight: 400; margin-top: 12px; line-height: 1.4; }
+h3 .en { font-family: var(--f-display); font-size: 26px; line-height: 1.15; font-style: italic; }
+h3 .ko { font-family: var(--f-ko-serif); font-size: 15px; margin-top: 4px; }
+h1 .en { font-size: clamp(46px, 8vw, 92px); }
+h1 .ko { font-size: clamp(20px, 3vw, 30px); }
+h2 .en { font-size: clamp(38px, 6vw, 68px); }
+h2 .ko { font-size: clamp(17px, 2.2vw, 22px); }
+em { font-style: italic; color: var(--gold); }
+.dark em { color: var(--gold); }
+.label { font-size: 12px; letter-spacing: .24em; text-transform: uppercase; color: var(--muted); margin-bottom: 20px; }
+.dark .label { color: var(--gold); }
+.body p + p { margin-top: 6px; }
+.body .en { max-width: 38em; }
+.body .ko { max-width: 38em; color: var(--muted); font-size: 15px; }
+
+/* header */
+header { position: sticky; top: 0; z-index: 20; background: var(--brand); border-bottom: 1px solid #0f4a2c; }
+header nav a { color: var(--on-dark-muted); }
+header nav a:hover, header nav a[aria-current="page"] { color: var(--on-dark); border-bottom-color: var(--on-dark); }
+.logoband { background: var(--brand); padding: 44px 0; line-height: 0; }
+.logoband img { height: 130px; width: auto; display: block; margin: 0 auto; }
+.teal em, footer em { color: var(--mint); }
+.bar { display: flex; align-items: center; justify-content: space-between; gap: 24px; min-height: 68px; }
+.logo { display: block; line-height: 0; height: 68px; overflow: hidden; }
+.logo img { height: 84px; width: auto; display: block; margin: -8px 0; }
+.vband { position: relative; height: clamp(300px, 34vw, 460px); background: var(--deep); overflow: hidden; border-bottom: 1px solid var(--line); }
+.vband video, .vband canvas { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; aspect-ratio: auto; }
+.vband video { display: none; }
+.vband img.bandimg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: none; }
+.vband.tall { height: clamp(460px, 56vw, 780px); }
+.vband.tall .herotext { background: linear-gradient(rgba(0,31,15,0) 55%, rgba(0,31,15,.55)); justify-content: flex-end; padding-bottom: 36px; gap: 12px; }
+.vband.tall .herotext h1 .en { font-size: clamp(24px, 2.6vw, 34px); }
+.vband.tall .herotext .btn { padding: 8px 22px; }
+.vband.tall .herotext h1 .ko { margin-top: 8px; }
+.vband .tag { position: absolute; right: 16px; bottom: 10px; font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--on-dark-muted); }
+.herotext { position: absolute; inset: 0; display: none; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 28px; background: linear-gradient(rgba(0,31,15,.35), rgba(0,31,15,.6)); color: var(--on-dark); }
+.herotext h1 .en { font-family: var(--f-display); font-style: normal; font-weight: 500; text-transform: uppercase; letter-spacing: .06em; font-size: clamp(34px, 4.6vw, 62px); line-height: 1.12; }
+.herotext h1 .ko { margin-top: 14px; font-size: clamp(16px, 1.8vw, 22px); color: var(--on-dark-muted); }
+.herotext .btn:hover { background: var(--on-dark); color: var(--brand); }
+.statement .label, .collective .label, .teamstrip .label { text-align: center; }
+.collective { text-align: center; }
+.collective h2 .en { font-style: normal; font-size: clamp(44px, 6.6vw, 84px); }
+.collective h2 .ko { margin-top: 18px; }
+.loopvid { display: block; width: 100%; max-width: 1100px; height: auto; margin: 56px auto 0; background: #0b1a11; }
+.loop { display: block; width: 100%; max-width: 1100px; height: auto; margin: 56px auto 0; overflow: visible; }
+.lp-line { fill: none; stroke: var(--ink); stroke-width: 1.2; }
+.lp-arc { fill: none; stroke: var(--brand); stroke-width: 2.4; }
+.lp-dot { fill: var(--brand); }
+.lp-ko { font-family: var(--f-ko-serif); fill: var(--ink); }
+.lp-en { font-family: var(--f-body); fill: var(--muted); }
+.teamstrip { padding: 72px 0 96px; }
+.team.wide .portrait { aspect-ratio: 4 / 5; overflow: hidden; }
+.portrait img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 20%; }
+.learn { display: inline-block; margin-top: 12px; font-size: 11px; letter-spacing: .18em; text-transform: uppercase; border-bottom: 1px solid var(--ink); padding-bottom: 2px; }
+.statement.who { padding-top: 104px; }
+.pillars { padding-top: 112px; }
+.has-mark .mark { top: -40px; left: -70px; }
+h2.center { text-align: center; }
+h2.center .en { font-style: normal; font-size: clamp(48px, 7vw, 88px); }
+h2.center .en em { font-style: italic; }
+.pdesc { max-width: 40em; margin: 24px auto 0; text-align: center; color: var(--muted); font-size: 15px; }
+.ko-s { font-size: 13px; color: var(--muted); }
+.pillars3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; margin-top: 56px; }
+.pcard .art { display: block; width: 100%; aspect-ratio: 4 / 3; background: var(--brand); }
+.pcard img.photo { object-fit: cover; }
+.pcard h3 { margin: 18px 0 8px; }
+.pcard p { color: var(--muted); font-size: 14px; }
+.svchead { display: flex; justify-content: space-between; align-items: flex-end; gap: 32px; }
+.svchead p { text-align: right; font-size: 13px; color: var(--muted); max-width: 22em; }
+.svc { display: grid; grid-template-columns: 1fr 1fr; gap: 0 64px; margin-top: 48px; }
+.svc > div { border-top: 1px solid var(--ink); padding: 22px 0 34px; }
+.svc .n { font-family: var(--f-display); font-size: 15px; letter-spacing: .14em; color: var(--muted); margin-bottom: 8px; }
+.svc ul { list-style: none; margin-top: 12px; }
+.svc li { position: relative; padding: 3px 0 3px 16px; font-size: 14px; color: var(--muted); }
+.svc li::before { content: "–"; position: absolute; left: 0; }
+.values { display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px; margin-top: 40px; }
+.vcard .glyph { aspect-ratio: 4 / 3; background: var(--paper-2); display: grid; place-items: center; }
+.vcard .glyph svg { width: 60%; height: auto; }
+.vcard h3 { margin: 18px 0 8px; }
+.vcard p { color: var(--muted); font-size: 14px; }
+.herotext.ital h1 .en { text-transform: none; font-style: italic; letter-spacing: 0; font-size: clamp(30px, 3.8vw, 52px); max-width: 20em; }
+.herotext em { color: var(--mint); }
+.subnav { position: sticky; top: 69px; z-index: 15; display: flex; justify-content: center; gap: 36px; padding: 12px 24px; background: var(--paper); border-bottom: 1px solid var(--line); }
+.subnav button { background: none; border: 0; border-bottom: 1px solid transparent; padding: 4px 0; font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); cursor: pointer; }
+.subnav button:hover { color: var(--ink); border-bottom-color: var(--ink); }
+.subnav .ko-s { letter-spacing: .02em; text-transform: none; margin-left: 4px; }
+#dv-overview, #dv-stages, #dv-levels, #dv-contact { scroll-margin-top: 130px; }
+.split { display: grid; grid-template-columns: 1fr 1fr; min-height: 440px; border-bottom: 1px solid var(--line); }
+.split .txt { padding: 80px 72px; display: flex; flex-direction: column; justify-content: center; }
+.split h1 .en, .split h2 .en { font-style: normal; font-size: clamp(40px, 4.6vw, 62px); line-height: 1.12; }
+.split h1 .en em, .split h2 .en em { font-style: italic; }
+.split .body { margin-top: 28px; }
+.split .body .en { font-size: 15px; }
+.split .img { position: relative; background: var(--brand); border-left: 1px solid var(--line); overflow: hidden; }
+.split.rev .img { order: -1; border-left: 0; border-right: 1px solid var(--line); }
+.split .art { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.split img.photo { object-fit: cover; }
+.phtag { position: absolute; left: 16px; bottom: 12px; font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--on-dark-muted); }
+h2.mid .en { font-style: normal; font-size: clamp(36px, 4.2vw, 54px); }
+h2.mid .en em { font-style: italic; }
+.stgrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-top: 48px; }
+.stg { padding: 32px 28px 36px; }
+.stg.s1 { background: #f8f6f1; }
+.stg.s2 { background: #dedacf; }
+.stg.s3 { background: var(--brand); color: var(--on-dark); }
+.chip2 { display: inline-block; background: var(--brand); color: var(--on-dark); font-size: 11px; font-weight: 500; letter-spacing: .06em; padding: 4px 10px; }
+.stg.s3 .chip2 { background: var(--mint); color: var(--brand); }
+.stg .no { font-family: var(--f-display); font-size: 30px; margin-top: 18px; line-height: 1; }
+.stg h3 { margin: 10px 0 0; min-height: 84px; }
+.stg h3 .en { font-size: 28px; font-style: normal; font-family: var(--f-body); font-weight: 500; line-height: 1.2; }
+.stg h3 .ko { font-size: 17px; margin-top: 4px; font-family: var(--f-body); font-weight: 500; }
+.stg hr { border: 0; border-top: 1px solid currentColor; margin: 20px 0 22px; }
+.stg p { font-size: 14px; margin-bottom: 16px; line-height: 1.6; }
+.stg p b { font-weight: 500; }
+.stg.s3 .ko-s { color: var(--on-dark-muted); }
+.lvlwrap { overflow-x: auto; margin-top: 40px; }
+.lvl { width: 100%; border-collapse: collapse; background: #faf8f4; }
+.lvl th, .lvl td { border: 1px solid #dcd8cf; padding: 18px 16px; font-size: 14px; color: #3a443d; vertical-align: middle; line-height: 1.55; }
+.lvl thead th { background: var(--brand); color: #fff; font-size: 20px; font-weight: 500; text-align: center; border-color: #1f5a3c; padding: 20px 12px; }
+.lvl thead .ko-s { color: var(--on-dark-muted); font-size: 12px; }
+.lvl tbody th { background: #efece5; font-weight: 500; text-align: center; width: 16%; font-size: 15px; color: var(--ink); }
+.lvl td { text-align: center; }
+.lvl ul { list-style: none; text-align: left; display: inline-block; }
+.lvl li { padding: 2px 0 2px 12px; position: relative; font-size: 13px; }
+.lvl li::before { content: "·"; position: absolute; left: 0; }
+.lvl .ck { color: var(--gold); font-weight: 500; }
+.lvl .dim { color: #9aa39c; }
+.lvl .pricecell { font-weight: 500; font-size: 17px; color: var(--gold); }
+h1.center { text-align: center; }
+h1.center .en { font-style: normal; font-size: clamp(52px, 8vw, 104px); line-height: 1.05; }
+h1.center .en em { font-style: italic; }
+h1.center .ko { margin-top: 14px; }
+.ptop { padding: 96px 0 88px; }
+.pcols { display: grid; grid-template-columns: repeat(3, 1fr); margin-top: 64px; }
+.pcol { padding: 0 32px; border-left: 1px solid var(--line); display: flex; flex-direction: column; align-items: flex-start; }
+.pcol:first-child { padding-left: 0; border-left: 0; }
+.pcol:last-child { padding-right: 0; }
+.plogo { position: relative; width: 100%; height: 230px; background: var(--paper-2); display: grid; place-items: center; margin-bottom: 20px; }
+.plogo .wm { font-family: var(--f-display); font-size: 36px; line-height: 1.15; text-align: center; padding: 0 20px; color: var(--ink); }
+.phtag2 { position: absolute; left: 12px; bottom: 10px; font-size: 10px; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); }
+.pcol h3 { margin-bottom: 10px; }
+.pcol p { color: var(--muted); font-size: 14px; margin-bottom: 22px; flex: 1; }
+.pcol .btn { padding: 10px 22px; }
+.prows { list-style: none; border-top: 1px solid var(--ink); }
+.prow { display: grid; grid-template-columns: 56px 300px 1fr; gap: 16px; padding: 26px 0; border-bottom: 1px solid var(--line); align-items: baseline; }
+.prow i { font-style: normal; font-family: var(--f-display); color: var(--muted); }
+.prow b { font-family: var(--f-display); font-size: 26px; font-weight: 500; line-height: 1.2; }
+.prow b small { display: block; font-family: var(--f-body); font-size: 14px; font-weight: 300; color: var(--muted); margin-top: 2px; }
+.names { display: flex; flex-wrap: wrap; gap: 8px 36px; }
+.lwall { list-style: none; display: grid; grid-template-columns: repeat(6, 1fr); border-top: 1px solid var(--ink); border-left: 1px solid var(--line); }
+.lwall li { height: 120px; display: grid; place-items: center; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 0 14px; }
+.lwall img { display: block; height: auto; max-width: 100%; }
+.nm { font-family: var(--f-display); font-size: 26px; line-height: 1.3; }
+.nm small { font-family: var(--f-body); font-size: 13px; color: var(--muted); margin-left: 4px; }
+.nm.tbd { font-family: var(--f-body); font-size: 15px; color: var(--muted); }
+.car { --w: 440px; --g: 18px; position: relative; height: 440px; overflow: hidden; }
+.track { position: absolute; left: 50%; top: 0; display: flex; gap: var(--g); transition: transform .7s cubic-bezier(.3,.7,.2,1); will-change: transform; }
+.slide { flex: none; width: var(--w); height: 440px; background: var(--brand); position: relative; }
+.slide img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+.slide svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.slide .phtag { left: 14px; bottom: 10px; }
+.arrow { position: absolute; top: 50%; width: 42px; height: 42px; border-radius: 50%; border: 0; background: #fff; color: var(--ink); font-size: 26px; line-height: 1; cursor: pointer; transform: translate(-50%, -50%); box-shadow: 0 1px 6px rgba(0,0,0,.18); z-index: 2; }
+.arrow.prev { left: calc(50% - var(--w) - var(--g)); }
+.arrow.next { left: calc(50% + var(--w) + var(--g)); }
+.arrow:hover { background: var(--ink); color: #fff; }
+.capt { display: none; text-align: center; font-family: var(--f-display); font-style: italic; font-size: 17px; color: var(--muted); margin-top: 18px; min-height: 28px; }
+@media (prefers-reduced-motion: reduce) { .track { transition: none; } }
+.pricegrid { display: grid; grid-template-columns: repeat(3, 1fr); margin-top: 48px; border: 1px solid var(--line); background: #f6f4ef; }
+.pcell { padding: 28px 32px 30px; border-left: 1px solid var(--line); }
+.pcell:first-child { border-left: 0; }
+.plab { font-size: 13px; letter-spacing: .1em; color: var(--gold); font-weight: 500; }
+.pnum { font-family: var(--f-display); font-size: 62px; line-height: 1.1; margin-top: 10px; font-variant-numeric: tabular-nums; }
+.pnum small { font-family: var(--f-ko-serif); font-size: 28px; margin-left: 4px; }
+.pkrw { font-size: 12px; letter-spacing: .08em; color: var(--muted); margin-bottom: 14px; }
+.pcell h3 .en { font-size: 22px; }
+.psub { font-size: 13px; color: var(--muted); margin-top: 6px; }
+.common { margin-top: 14px; background: #e9e2d3; padding: 20px 24px; text-align: center; font-size: 15px; }
+.common b { display: block; font-weight: 500; }
+.cmphead { margin-top: 40px; font-weight: 500; font-size: 15px; }
+.cmp { width: 100%; border-collapse: collapse; table-layout: fixed; }
+.cmp th, .cmp td { padding: 16px 20px; font-size: 14px; border-bottom: 1px solid #e0dcd2; }
+.cmp thead th { background: var(--brand); color: #fff; font-weight: 500; font-size: 13px; letter-spacing: .08em; text-align: center; padding: 18px 12px; }
+.cmp thead th:first-child { text-align: left; padding-left: 24px; width: 34%; }
+.cmp thead .ko-s { color: var(--on-dark-muted); letter-spacing: 0; }
+.cmp tbody th { text-align: left; font-weight: 500; padding-left: 24px; color: var(--ink); }
+.cmp tbody td { text-align: center; }
+.cmp tbody tr:nth-child(odd) { background: #f7f5f0; }
+.cmp tbody tr:nth-child(even) { background: #fbfaf7; }
+.cmp tbody tr.lastrow { background: #e9e2d3; }
+.cmp .ko-s { display: block; font-size: 12px; }
+.cmp .dash { color: #9aa39c; }
+.cmp .v { display: block; font-weight: 400; }
+.fn { margin-top: 18px; font-size: 13px; color: var(--muted); }
+.addons { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 28px; }
+.addon { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; border: 1px solid var(--line); padding: 18px 20px; background: #f6f4ef; }
+.addon b { display: block; font-weight: 500; font-size: 15px; line-height: 1.4; }
+.addon .ko-s { display: block; }
+.aprice { text-align: right; font-family: var(--f-display); font-size: 24px; line-height: 1.2; white-space: nowrap; }
+.aprice .ko-s { font-family: var(--f-body); font-size: 11px; }
+.closing { padding: 104px 0; }
+.cgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: start; }
+.closing h2 .en { font-size: clamp(36px, 4.2vw, 56px); }
+.closing h2 .ko { font-size: clamp(22px, 2.6vw, 32px); line-height: 1.4; margin-top: 20px; }
+.closing .body .closer { margin-top: 28px; font-weight: 500; color: var(--ink); }
+.closing .body .closer.ko { margin-top: 4px; }
+.has-mark { position: relative; overflow: hidden; }
+.has-mark .mark { position: absolute; top: -9%; left: -5%; width: clamp(440px, 72vw, 940px); height: auto; opacity: .1; pointer-events: none; user-select: none; }
+.has-mark .wrap { position: relative; }
+nav { display: flex; gap: 28px; font-size: 12px; letter-spacing: .16em; text-transform: uppercase; }
+nav a { padding: 6px 0; border-bottom: 1px solid transparent; color: var(--muted); }
+nav a:hover, nav a[aria-current="page"] { color: var(--ink); border-bottom-color: var(--ink); }
+
+/* views */
+.view { display: none; }
+.view.on { display: block; }
+
+/* hero */
+.dark { background: var(--paper-2); color: var(--on-dark); }
+.hero { padding: 72px 0 72px; }
+.hero .grid2 { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, .75fr); gap: 56px; align-items: center; }
+.hero .lead { margin-top: 36px; }
+.hero .lead .en { font-size: 18px; max-width: 32em; }
+.hero .lead .ko { font-size: 15px; margin-top: 6px; max-width: 32em; }
+.cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 40px; }
+.btn { display: inline-block; border: 1px solid currentColor; padding: 12px 26px; font-size: 12px; letter-spacing: .18em; text-transform: uppercase; cursor: pointer; background: none; transition: background .2s, color .2s; text-align: center; }
+.btn .ko { font-size: 11px; letter-spacing: .06em; text-transform: none; opacity: .8; }
+.btn:hover { background: var(--ink); color: var(--paper); }
+.dark .btn:hover { background: var(--on-dark); color: var(--paper); }
+.btn.solid { background: var(--ink); color: var(--paper); }
+.btn.solid:hover { background: transparent; color: var(--ink); }
+.dark .btn.solid { background: var(--gold); border-color: var(--gold); color: var(--paper); }
+.dark .btn.solid:hover { background: transparent; color: var(--gold); }
+canvas { display: block; width: 100%; aspect-ratio: 1 / 1; }
+
+section { padding: 96px 0; }
+.band { border-top: 1px solid var(--line); }
+.statement { text-align: center; }
+.statement p.big { font-family: var(--f-display); font-style: italic; font-size: clamp(30px, 5vw, 56px); line-height: 1.2; max-width: 20em; margin: 0 auto; text-wrap: balance; }
+.statement p.kr { font-family: var(--f-ko-serif); color: var(--muted); max-width: 26em; margin: 20px auto 0; font-size: 17px; }
+.statement .cta { justify-content: center; }
+
+/* hour grid */
+.gridbox { margin-top: 56px; display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 48px; align-items: start; }
+.panel { background: var(--paper-2); padding: 14px; }
+.readout { display: grid; gap: 18px; }
+.readout .row { border-top: 1px solid var(--line); padding-top: 12px; }
+.readout .k { font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.readout .v { font-family: var(--f-display); font-size: 46px; line-height: 1.1; font-variant-numeric: tabular-nums; }
+.readout .v small { font-family: var(--f-body); font-size: 13px; color: var(--muted); margin-left: 6px; }
+input[type=range] { width: 100%; accent-color: var(--gold); height: 28px; }
+.note { font-size: 13px; color: var(--muted); margin-top: 6px; }
+
+/* stats */
+.stats { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--line); }
+.stat { padding: 40px 20px 40px 0; border-bottom: 1px solid var(--line); }
+.stat b { display: block; font-family: var(--f-display); font-weight: 400; font-size: clamp(44px, 6vw, 72px); line-height: 1; font-variant-numeric: tabular-nums; }
+.stat span { display: block; font-size: 13px; color: var(--muted); margin-top: 10px; }
+
+/* pillars */
+.cols3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; margin-top: 56px; }
+.col .no { font-family: var(--f-display); font-size: 15px; letter-spacing: .14em; color: var(--muted); padding-bottom: 14px; border-bottom: 1px solid var(--ink); margin-bottom: 20px; }
+.col ul { list-style: none; margin-top: 18px; }
+.col li { padding: 9px 0; border-bottom: 1px solid var(--line); font-size: 15px; }
+.col li .ko { font-size: 13px; color: var(--muted); }
+.col p.sum { margin-top: 14px; color: var(--muted); font-size: 15px; }
+.circle { width: 120px; height: 120px; border-radius: 50%; border: 1px solid var(--ink); display: grid; place-items: center; text-align: center; font-family: var(--f-display); font-style: italic; font-size: 19px; line-height: 1.15; padding: 14px; margin-bottom: 24px; }
+
+/* teal cta panel */
+.teal { background: var(--teal); color: var(--on-dark); padding: 96px 0; }
+.teal h2 .en { font-size: clamp(36px, 5vw, 60px); }
+.teal h2 .ko { color: #b9cbcd; }
+.teal .body .ko { color: #b9cbcd; }
+.teal .btn:hover { background: var(--on-dark); color: var(--teal); }
+.mailline { margin-top: 28px; font-size: 14px; letter-spacing: .04em; color: #b9cbcd; }
+.copied { margin-left: 10px; font-size: 12px; }
+
+/* page header */
+.pagehead { padding: 80px 0 56px; border-bottom: 1px solid var(--line); }
+.pagehead .body { margin-top: 32px; }
+
+/* tiers & chips */
+.tiers { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 48px; }
+.tier { border: 1px solid var(--ink); padding: 32px 28px; display: flex; flex-direction: column; gap: 14px; }
+.tier.full { background: var(--brand); color: var(--on-dark); }
+.tier.full .ko, .tier.full .note { color: var(--on-dark-muted); }
+.tier .no { font-family: var(--f-display); letter-spacing: .14em; font-size: 15px; color: var(--muted); }
+.tier.full .no { color: var(--mint); }
+.chips { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 36px; }
+.chip { border: 1px solid var(--line); padding: 10px 16px; font-size: 14px; line-height: 1.4; }
+.chip .ko { font-size: 12px; color: var(--muted); }
+
+/* team + work */
+.team { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; margin-top: 48px; }
+.portrait { aspect-ratio: 4 / 5; background: var(--paper-2); display: grid; place-items: center; position: relative; }
+.portrait i { font-family: var(--f-display); font-size: 72px; color: var(--line); }
+.portrait span { position: absolute; left: 14px; bottom: 10px; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+.person { margin-top: 16px; }
+.person b { font-family: var(--f-display); font-size: 26px; font-weight: 500; display: block; line-height: 1.2; }
+.person span { font-size: 14px; color: var(--muted); display: block; }
+.strip { position: relative; margin-top: 40px; }
+.strack { list-style: none; display: flex; gap: 14px; overflow-x: auto; scroll-snap-type: x proximity; scroll-behavior: smooth; scrollbar-width: none; -ms-overflow-style: none; padding: 0; }
+.strack::-webkit-scrollbar { display: none; }
+.strack li { flex: 0 0 auto; scroll-snap-align: start; height: 420px; background: var(--paper-2); }
+.strack img { display: block; height: 100%; width: auto; user-select: none; -webkit-user-drag: none; }
+.sarrow { position: absolute; top: 50%; width: 44px; height: 44px; border-radius: 50%; border: 0; background: #fff; color: var(--ink); font-size: 28px; line-height: 1; cursor: pointer; transform: translateY(-50%); box-shadow: 0 1px 8px rgba(0,0,0,.22); z-index: 2; }
+.sprev { left: 12px; } .snext { right: 12px; }
+.sarrow:hover { background: var(--ink); color: #fff; }
+.sarrow[disabled] { opacity: .35; cursor: default; }
+.sarrow[disabled]:hover { background: #fff; color: var(--ink); }
+.work { margin-top: 40px; border-top: 1px solid var(--ink); }
+.work li { list-style: none; display: grid; grid-template-columns: 56px 1fr auto; gap: 16px; padding: 18px 0; border-bottom: 1px solid var(--line); align-items: baseline; }
+.work li i { font-style: normal; font-family: var(--f-display); color: var(--muted); }
+.work li b { font-family: var(--f-display); font-size: 24px; font-weight: 500; }
+.work li b small { font-family: var(--f-body); font-size: 14px; font-weight: 300; color: var(--muted); margin-left: 10px; }
+.work li span { font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+
+/* studio tools */
+.toolbar { display: flex; flex-wrap: wrap; gap: 20px 32px; align-items: end; margin-top: 36px; }
+.field { display: grid; gap: 4px; align-content: start; }
+.field label { font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); line-height: 1.4; }
+.field label .ko { font-size: 11px; letter-spacing: .02em; text-transform: none; }
+input[type=number], input[type=text], select { font: inherit; font-size: 16px; padding: 9px 10px; border: 1px solid var(--line); background: #f1f6ef; color: #0b2416; width: 100%; min-width: 0; border-radius: 0; font-variant-numeric: tabular-nums; }
+.seg { display: inline-flex; border: 1px solid var(--ink); }
+.seg button { background: none; border: 0; padding: 9px 18px; cursor: pointer; font-size: 13px; letter-spacing: .1em; }
+.seg button[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
+.tool { margin-top: 56px; border: 1px solid var(--ink); display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr); }
+.tool > div { padding: 32px 28px; }
+.tool .in { border-right: 1px solid var(--ink); }
+.fields { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 24px; }
+.out { background: var(--paper-2); }
+.res { display: grid; gap: 0; margin-top: 24px; }
+.res > div { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding: 12px 0; border-bottom: 1px solid var(--line); }
+.res dt { font-size: 14px; line-height: 1.4; }
+.res dt .ko { font-size: 12px; color: var(--muted); }
+.res dd { font-family: var(--f-display); font-size: 26px; font-variant-numeric: tabular-nums; text-align: right; }
+.comment { margin-top: 24px; padding: 16px 18px; background: var(--paper); border-left: 3px solid var(--gold); font-size: 15px; }
+.comment .ko { font-size: 14px; color: var(--muted); margin-top: 4px; }
+.ing { display: grid; grid-template-columns: 1fr 1fr auto; gap: 10px; margin-top: 10px; align-items: end; }
+.ing button { border: 1px solid var(--line); background: none; padding: 9px 12px; cursor: pointer; }
+.linkbtn { margin-top: 14px; background: none; border: 0; border-bottom: 1px solid var(--ink); padding: 2px 0; cursor: pointer; font-size: 13px; }
+[hidden] { display: none !important; }
+.scards { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 40px; }
+.scard { text-align: left; font: inherit; color: inherit; background: none; border: 1px solid var(--ink); padding: 36px 32px 30px; cursor: pointer; display: flex; flex-direction: column; transition: background .2s, color .2s; }
+.scard:hover, .scard:focus-visible { background: var(--ink); color: var(--paper); }
+.scard:hover .label, .scard:hover .sdesc .ko, .scard:hover .sio dt, .scard:hover .sio dd .ko, .scard:hover h3 .ko { color: var(--on-dark-muted); }
+.scard h3 { font-family: var(--f-display); font-style: italic; font-size: 38px; line-height: 1.1; margin-top: 10px; }
+.scard h3 .ko { font-style: normal; }
+.sdesc { margin-top: 18px; font-size: 15px; line-height: 1.6; }
+.sdesc .ko, .sio dd .ko { color: var(--muted); font-size: 13px; margin-top: 4px; }
+.sio { margin-top: 24px; border-top: 1px solid currentColor; }
+.sio > div { display: grid; grid-template-columns: 76px 1fr; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--line); }
+.scard:hover .sio > div { border-color: #2f5a42; }
+.sio dt { font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.sio dt .ko { text-transform: none; letter-spacing: .02em; }
+.sio dd { font-size: 14px; }
+.sopen { margin-top: auto; padding-top: 26px; font-size: 12px; letter-spacing: .18em; text-transform: uppercase; }
+.sopen .kor { text-transform: none; letter-spacing: .04em; font-size: 12px; margin-left: 4px; }
+#stu-tools { scroll-margin-top: 70px; }
+.stubar { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 20px 32px; margin-top: 36px; }
+.label.step { margin: 28px 0 0; }
+.label.step .kor { text-transform: none; letter-spacing: .02em; margin-left: 6px; color: var(--muted); }
+.fields.tight { margin-top: 12px; }
+.field .hint { font-size: 11px; color: var(--muted); line-height: 1.4; }
+.simwrap { grid-column: 1 / -1; border-top: 1px solid var(--ink); }
+.sim { width: 100%; border-collapse: collapse; margin-top: 14px; font-variant-numeric: tabular-nums; }
+.sim th { text-align: left; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); font-weight: 400; padding: 8px 12px 8px 0; border-bottom: 1px solid var(--ink); vertical-align: bottom; }
+.sim th .ko { display: block; text-transform: none; letter-spacing: .02em; font-size: 11px; }
+.sim td { padding: 13px 12px 13px 0; border-bottom: 1px solid var(--line); font-size: 15px; vertical-align: top; }
+.sim td .sub { display: block; font-size: 12px; color: var(--muted); }
+.sim tr.now td { background: var(--paper-2); }
+.sim tr.now td:first-child { border-left: 3px solid var(--gold); padding-left: 10px; }
+.sim .up { color: var(--gold); }
+.sim .dn { color: #9a2f27; }
+.sim .rtier { font-weight: 500; }
+.sim .t-good { color: var(--gold); }
+.sim .t-mid { color: #8a6516; }
+.sim .t-high { color: #9a2f27; }
+.mres td:first-child small { display: block; font-size: 12px; color: var(--muted); }
+.mcard { position: relative; border: 1px solid var(--line); background: #faf8f4; padding: 20px 18px 16px; margin-top: 18px; }
+.mcard .mdel { position: absolute; top: 8px; right: 8px; border: 0; background: none; cursor: pointer; font-size: 18px; line-height: 1; padding: 4px 8px; color: var(--muted); }
+.mcard .mdel:hover { color: var(--ink); }
+.mcard .fields { margin-top: 0; padding-right: 22px; }
+.ing2 { display: grid; grid-template-columns: minmax(0, 1fr) 150px 36px; gap: 8px; margin-top: 8px; }
+.ing2 button { border: 1px solid var(--line); background: none; cursor: pointer; }
+.mtot { display: flex; justify-content: space-between; align-items: baseline; margin-top: 16px; padding-top: 12px; border-top: 1px solid var(--line); font-size: 13px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.mtot b { font-family: var(--f-display); font-size: 24px; font-weight: 400; letter-spacing: 0; text-transform: none; color: var(--ink); }
+.addmenu { display: block; width: 100%; margin-top: 18px; padding: 14px; border: 1px dashed var(--ink); background: none; cursor: pointer; font-size: 14px; }
+.addmenu:hover { background: var(--ink); color: var(--paper); }
+.check { margin-top: 20px; list-style: none; }
+.check li { border-bottom: 1px solid var(--line); }
+.check label { display: flex; gap: 14px; align-items: flex-start; padding: 11px 0; cursor: pointer; }
+.check input { margin-top: 6px; width: 18px; height: 18px; accent-color: var(--gold); flex: none; }
+.check .ko { font-size: 13px; color: var(--muted); }
+.bar-prog { height: 4px; background: var(--line); margin-top: 20px; }
+.bar-prog i { display: block; height: 100%; width: 0; background: var(--gold); }
+
+footer { border-top: 1px solid #0f4a2c; background: var(--brand); color: var(--on-dark-muted); padding: 56px 0 48px; font-size: 13px; }
+footer .wrap { display: flex; flex-wrap: wrap; gap: 20px 48px; justify-content: space-between; }
+footer .logo { color: var(--on-dark); font-size: 20px; }
+footer nav a { color: var(--on-dark-muted); }
+footer nav a:hover { color: var(--on-dark); border-bottom-color: var(--on-dark); }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .btn { transition: none; } }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap bar">
+    <a class="logo" href="#home" id="logo"><img src="logo.png" alt="MANHOUR, the 10,000-hour principle"></a>
+    <nav aria-label="Main">
+      <a href="#about" data-nav="about">About</a>
+      <a href="#develop-with-us" data-nav="develop-with-us">Develop with us</a>
+      <a href="#partner" data-nav="partner">Partner</a>
+      <a href="#careers" data-nav="careers">Careers</a>
+      <a href="#studio" data-nav="studio">Studio</a>
+    </nav>
+  </div>
+</header>
+
+<!-- Video band: same on every menu. To use a real video, set its file in VIDEOS in the script below. -->
+<div class="vband" id="vband"><canvas id="bandc" aria-hidden="true"></canvas><img id="bandimg" class="bandimg" alt="" aria-hidden="true"><video id="bandv" muted loop playsinline preload="metadata" aria-hidden="true"></video>
+  <div class="herotext" id="herotext"><h1><span class="en">Ten thousand hours.<br>One brand.</span><span class="ko">1만 시간, 하나의 브랜드.</span></h1><a class="btn" href="#about"><span class="en">About</span><span class="ko">소개</span></a></div>
+  <div class="herotext ital" id="abouttext"><h1><span class="en">MANHOUR is the studio that stays with <em>one brand</em> for ten thousand hours.</span><span class="ko">만아워는 하나의 브랜드와 1만 시간을 함께하는 스튜디오입니다.</span></h1></div>
+  <span class="tag" id="bandtag">Video placeholder</span></div>
+
+<!-- ============ HOME ============ -->
+<main>
+<div class="view on" id="v-home">
+  <section class="statement who">
+    <div class="wrap">
+      <p class="label">Who we are · 만아워는</p>
+      <p class="big">MANHOUR is a café &amp; F&amp;B consulting studio that stays with <em>one brand</em> for <em>ten thousand hours</em>, from <em>analysis</em> to <em>aftercare</em>.</p>
+      <p class="kr">하나의 브랜드와 1만 시간을 함께하는 카페·F&amp;B 컨설팅 스튜디오입니다. 분석부터 사후관리까지 끝까지 곁에 있습니다.</p>
+      <div class="cta"><a class="btn" href="#about"><span class="en">Learn more</span><span class="ko">더 알아보기</span></a></div>
+    </div>
+  </section>
+
+  <section class="band collective">
+    <div class="wrap">
+      <h2><span class="en"><em style="white-space:nowrap">The 10,000-hour</em> principle</span><span class="ko">컨설팅을 위한 만 시간의 법칙</span></h2>
+      <video class="loopvid" src="principle.mp4" poster="principle-poster.jpg" autoplay muted loop playsinline preload="auto" aria-label="Analysis, execution and aftercare loop over 10,000 hours, which equals 416.667 days"></video>
+    </div>
+  </section>
+
+  <div class="logoband" aria-hidden="true"><div class="wrap"><img src="logo.png" alt=""></div></div>
+
+  <section class="teamstrip">
+    <div class="wrap">
+      <p class="label">Team · 함께하는 사람들</p>
+      <div class="team wide">
+        <div><div class="portrait"><img src="team-sh.jpg" alt="Song Ho-geun"></div><div class="person"><b>Song Ho-geun</b><span>송호근 · Role to be confirmed</span></div><a class="learn" href="#about">Learn more</a></div>
+        <div><div class="portrait"><img src="team-yk.jpg" alt="Yun Gyeong-nam"></div><div class="person"><b>Yun Gyeong-nam</b><span>윤경남 · Role to be confirmed</span></div><a class="learn" href="#about">Learn more</a></div>
+        <div><div class="portrait"><img src="team-sb.jpg" alt="Sim Seong-bo"></div><div class="person"><b>Sim Seong-bo</b><span>심성보 · Representative 대표</span></div><a class="learn" href="#about">Learn more</a></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="teal">
+    <div class="wrap">
+      <h2><span class="en">Develop <em>with</em> us</span><span class="ko">함께 만들어갑니다</span></h2>
+      <div class="body" style="margin-top:24px"><p class="en">Opening a café or an F&amp;B brand? Tell us about your store and we will show how we would approach it.</p><p class="ko">카페나 F&amp;B 브랜드를 준비 중이신가요? 매장 이야기를 들려주시면 진행 방향을 정리해 드립니다.</p></div>
+      <div class="cta"><a class="btn" href="#develop-with-us"><span class="en">Learn more</span><span class="ko">자세히 보기</span></a></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ ABOUT ============ -->
+<div class="view" id="v-about">
+  <section class="has-mark pillars">
+    <img class="mark" src="about-mark.png" alt="" aria-hidden="true">
+    <div class="wrap">
+      <h2 class="center"><span class="en">Three <em>Pillars</em></span><span class="ko">만아워의 세 가지 기둥</span></h2>
+      <p class="pdesc">MANHOUR rests on three pillars: time that is committed, one team for everything a store needs, and support that reaches overseas owners.<br><span class="ko-s">약속된 시간, 매장에 필요한 모든 것을 맡는 하나의 팀, 해외 사업자까지 아우르는 지원. 만아워의 세 기둥입니다.</span></p>
+      <div class="pillars3"><div class="pcard"><img class="art photo" src="pillar-time.jpg" alt="Barista adjusting an espresso machine in a cloud of steam" style="object-position:50% 14%"><h3><span class="en">Time</span><span class="ko">시간</span></h3><p>Engagements run for ten thousand hours, about 417 days, so advice is followed through, not handed over.<br><span class="ko-s">1만 시간 동안 계약이 유지되어, 조언으로 끝나지 않고 결과까지 함께합니다.</span></p><a class="learn" href="#develop-with-us">Learn more</a></div><div class="pcard"><img class="art photo" src="pillar-onestop.jpg" alt="Crew building a café counter frame on a construction site" style="object-position:50% 55%"><h3><span class="en">One-stop</span><span class="ko">원스톱</span></h3><p>Consulting, coffee machines, equipment, fixtures and furniture, sourced and specified together.<br><span class="ko-s">컨설팅부터 커피머신, 장비, 집기, 가구까지 한 번에 구성합니다.</span></p><a class="learn" href="#develop-with-us">Learn more</a></div><div class="pcard"><svg class="art" viewBox="0 0 400 300" aria-hidden="true"><g fill="none" stroke="#b8e0c6" stroke-width="2"><circle cx="200" cy="150" r="100"/><ellipse cx="200" cy="150" rx="45" ry="100"/><ellipse cx="200" cy="150" rx="100" ry="40"/><line x1="100" y1="150" x2="300" y2="150"/><line x1="200" y1="50" x2="200" y2="250"/></g></svg><h3><span class="en">Global</span><span class="ko">글로벌</span></h3><p>English-language support for overseas owners opening in Korea, with tax and administrative work handled through licensed professionals.<br><span class="ko-s">한국에 매장을 여는 해외 사업자를 영어로 지원하고, 세무·행정은 세무사·행정사와 함께 진행합니다.</span></p><a class="learn" href="#develop-with-us">Learn more</a></div></div>
+    </div>
+  </section>
+
+  <section class="band" style="padding-top:0;padding-bottom:0">
+    <div class="wrap stats">
+      <div class="stat"><b>10,000</b><span>Hours of support<br>시간의 관리</span></div>
+      <div class="stat"><b>417</b><span>Days of engagement<br>일의 계약 기간</span></div>
+      <div class="stat"><b>3</b><span>Stages, start to aftercare<br>단계 (분석·실행·사후관리)</span></div>
+      <div class="stat"><b>4</b><span>Core analyses<br>가지 핵심 분석</span></div>
+    </div>
+  </section>
+
+  <div class="logoband" aria-hidden="true"><div class="wrap"><img src="logo.png" alt=""></div></div>
+
+  <section class="teamstrip">
+    <div class="wrap">
+      <p class="label">Team · 함께하는 사람들</p>
+      <div class="team wide"><div><div class="portrait"><img src="team-sh.jpg" alt="Song Ho-geun"></div><div class="person"><b>Song Ho-geun</b><span>송호근 · Role to be confirmed</span></div></div><div><div class="portrait"><img src="team-yk.jpg" alt="Yun Gyeong-nam"></div><div class="person"><b>Yun Gyeong-nam</b><span>윤경남 · Role to be confirmed</span></div></div><div><div class="portrait"><img src="team-sb.jpg" alt="Sim Seong-bo"></div><div class="person"><b>Sim Seong-bo</b><span>심성보 · Representative 대표</span></div></div></div>
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="wrap">
+      <div class="svchead">
+        <h2><span class="en">Core <em>services</em></span><span class="ko">만아워의 핵심 서비스</span></h2>
+        <p>Full details on the Develop with us page.<br><span class="ko-s">자세한 내용은 Develop with us에서 확인하세요.</span></p>
+      </div>
+      <div class="svc"><div><div class="n">01</div><h3><span class="en">Analysis &amp; Planning</span><span class="ko">분석·기획</span></h3><ul><li>Trade-area and sales analysis · 상권·매출 분석</li><li>Store and marketing analysis · 매장·마케팅 분석</li></ul></div><div><div class="n">02</div><h3><span class="en">Execution &amp; Support</span><span class="ko">실행·보조</span></h3><ul><li>On-site and marketing consulting · 현장·마케팅 컨설팅</li><li>Content, recipe training, distribution design · 콘텐츠·레시피 교육·유통 설계</li></ul></div><div><div class="n">03</div><h3><span class="en">Aftercare</span><span class="ko">사후관리</span></h3><ul><li>Ongoing data management · 데이터 지속관리</li><li>Monthly sales trend and improvement plan · 월별 매출 추이·월간 개선안</li></ul></div><div><div class="n">04</div><h3><span class="en">Add-on options</span><span class="ko">추가옵션</span></h3><ul><li>Store and food photography, review campaigns · 촬영, 체험단 핸들링</li><li>Logo, website, staffing outsourcing · 로고·홈페이지·인력 아웃소싱</li></ul></div></div>
+      <div class="cta"><a class="btn" href="#develop-with-us"><span class="en">Learn more</span><span class="ko">자세히 보기</span></a></div>
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="wrap">
+      <p class="label">How we work · 일하는 원칙</p>
+      <div class="values"><div class="vcard"><div class="glyph"><svg viewBox="0 0 200 150" aria-hidden="true" fill="none" stroke="#002e17" stroke-width="2.4"><circle cx="100" cy="75" r="46"/><path d="M100 75V44M100 75l22 13"/></svg></div><h3><span class="en">We stay.</span><span class="ko">끝까지 머뭅니다</span></h3><p>Engagements run for ten thousand hours. We are still here after opening day.<br><span class="ko-s">1만 시간 동안 함께합니다. 오픈 이후에도 곁에 있습니다.</span></p></div><div class="vcard"><div class="glyph"><svg viewBox="0 0 200 150" aria-hidden="true" fill="none" stroke="#002e17" stroke-width="2.4"><rect x="50" y="95" width="20" height="30"/><rect x="80" y="75" width="20" height="50"/><rect x="110" y="55" width="20" height="70"/><rect x="140" y="35" width="20" height="90" fill="#002e17"/></svg></div><h3><span class="en">We measure.</span><span class="ko">숫자로 확인합니다</span></h3><p>Every plan starts from analysis, and every month ends with sales trends and an improvement plan.<br><span class="ko-s">모든 기획은 분석에서 시작하고, 매달 매출 추이와 개선안으로 마무리합니다.</span></p></div><div class="vcard"><div class="glyph"><svg viewBox="0 0 200 150" aria-hidden="true" fill="none" stroke="#002e17" stroke-width="2.4"><circle cx="80" cy="62" r="32"/><circle cx="120" cy="62" r="32"/><circle cx="100" cy="94" r="32"/></svg></div><h3><span class="en">One team.</span><span class="ko">하나의 팀으로</span></h3><p>Design, build, tax and photography specialists work under one coordinated plan.<br><span class="ko-s">디자인, 시공, 세무, 촬영 전문가가 하나의 계획 아래 움직입니다.</span></p></div><div class="vcard"><div class="glyph"><svg viewBox="0 0 200 150" aria-hidden="true" fill="none" stroke="#002e17" stroke-width="2.4"><circle cx="100" cy="75" r="46"/><ellipse cx="100" cy="75" rx="19" ry="46"/><path d="M54 75h92"/></svg></div><h3><span class="en">Open to the world.</span><span class="ko">세계를 향해 열려 있습니다</span></h3><p>English-language support for owners opening a store in Korea.<br><span class="ko-s">한국에 매장을 여는 해외 사업자를 영어로 지원합니다.</span></p></div></div>
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="wrap">
+      <p class="label">Selected Work</p>
+      <h2><span class="en">Track <em>record</em></span><span class="ko">수행 이력</span></h2>
+      <div class="strip" id="strip">
+        <button class="sarrow sprev" type="button" aria-label="Previous photos" id="sprev">&#8249;</button>
+        <ul class="strack" id="strack" tabindex="0" aria-label="Track record photos"><li><img src="work/w01.jpg" alt="MANHOUR track record photo 1" draggable="false"></li><li><img src="work/w02.jpg" alt="MANHOUR track record photo 2" draggable="false"></li><li><img src="work/w03.jpg" alt="MANHOUR track record photo 3" draggable="false"></li><li><img src="work/w04.jpg" alt="MANHOUR track record photo 4" draggable="false"></li><li><img src="work/w05.jpg" alt="MANHOUR track record photo 5" draggable="false"></li><li><img src="work/w06.jpg" alt="MANHOUR track record photo 6" draggable="false"></li><li><img src="work/w07.jpg" alt="MANHOUR track record photo 7" draggable="false"></li><li><img src="work/w08.jpg" alt="MANHOUR track record photo 8" draggable="false"></li><li><img src="work/w09.jpg" alt="MANHOUR track record photo 9" draggable="false"></li><li><img src="work/w10.jpg" alt="MANHOUR track record photo 10" draggable="false"></li><li><img src="work/w11.jpg" alt="MANHOUR track record photo 11" draggable="false"></li><li><img src="work/w12.jpg" alt="MANHOUR track record photo 12" draggable="false"></li><li><img src="work/w13.jpg" alt="MANHOUR track record photo 13" draggable="false"></li><li><img src="work/w14.jpg" alt="MANHOUR track record photo 14" draggable="false"></li><li><img src="work/w15.jpg" alt="MANHOUR track record photo 15" draggable="false"></li><li><img src="work/w16.jpg" alt="MANHOUR track record photo 16" draggable="false"></li><li><img src="work/w17.jpg" alt="MANHOUR track record photo 17" draggable="false"></li><li><img src="work/w18.jpg" alt="MANHOUR track record photo 18" draggable="false"></li><li><img src="work/w19.jpg" alt="MANHOUR track record photo 19" draggable="false"></li></ul>
+        <button class="sarrow snext" type="button" aria-label="Next photos" id="snext">&#8250;</button>
+      </div>
+    </div>
+  </section>
+
+  <div class="teal">
+    <div class="wrap">
+      <h2><span class="en">Develop <em>with</em> us</span><span class="ko">함께 만들어갑니다</span></h2>
+      <div class="body" style="margin-top:24px"><p class="en">Opening a café or an F&amp;B brand? Tell us about your store and we will show how we would approach it.</p><p class="ko">카페나 F&amp;B 브랜드를 준비 중이신가요? 매장 이야기를 들려주시면 진행 방향을 정리해 드립니다.</p></div>
+      <div class="cta"><a class="btn" href="#develop-with-us"><span class="en">Learn more</span><span class="ko">자세히 보기</span></a></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ DEVELOP WITH US ============ -->
+<div class="view" id="v-develop-with-us">
+  <div class="subnav" role="navigation" aria-label="On this page"><button type="button" data-go="dv-overview">Overview <span class="ko-s">개요</span></button><button type="button" data-go="dv-stages">Stages <span class="ko-s">단계</span></button><button type="button" data-go="dv-levels">Service levels <span class="ko-s">서비스 구성</span></button><button type="button" data-go="dv-contact">Contact <span class="ko-s">문의</span></button></div>
+  <section class="split" id="dv-overview">
+    <div class="txt">
+      <h1><span class="en">Development at <em>MANHOUR</em></span><span class="ko">만아워에서의 개발</span></h1>
+      <div class="body">
+        <p class="en">MANHOUR is a café and F&amp;B consulting studio that works with one brand at a time for ten thousand hours. Each engagement brings together analysis, hands-on execution and monthly aftercare, so a store is built on a clear plan and keeps improving after opening day.</p>
+        <p class="ko">만아워는 한 번에 하나의 브랜드와 1만 시간을 함께하는 카페·F&amp;B 컨설팅 스튜디오입니다. 분석, 현장 실행, 월간 사후관리를 하나로 묶어 명확한 계획 위에 매장을 세우고, 오픈 이후에도 계속 개선합니다.</p>
+      </div>
+    </div>
+    <div class="img"><img class="art photo" src="dev-development.jpg" alt="Stacked bags of coffee beans" style="object-position:50% 40%"></div>
+  </section>
+  <section class="split rev">
+    <div class="txt">
+      <h2><span class="en">Why <em>MANHOUR</em>?</span><span class="ko">왜 만아워인가요?</span></h2>
+      <div class="body">
+        <p class="en">Our contracts are built around time. We stay for the full ten thousand hours, about 417 days, and we put consulting, coffee machines, equipment, fixtures and furniture into one plan, so what is designed is what gets built.</p>
+        <p class="ko">만아워의 계약은 시간을 기준으로 합니다. 약 417일, 1만 시간을 끝까지 함께하며 컨설팅, 커피머신, 장비, 집기, 가구를 하나의 계획으로 묶어 설계한 그대로 완성합니다.</p>
+        <p class="en" style="margin-top:18px">For overseas owners opening in Korea, we work in English and bring in licensed tax and administrative professionals, so you can focus on the brand.</p>
+        <p class="ko">한국에 매장을 여는 해외 사업자는 영어로 소통하고, 세무사·행정사와 함께 진행하므로 브랜드에만 집중하실 수 있습니다.</p>
+      </div>
+    </div>
+    <div class="img"><img class="art photo" src="dev-why.jpg" alt="A café counter and seating area being prepared at night" style="object-position:50% 55%"></div>
+  </section>
+
+  <section class="band" id="dv-stages">
+    <div class="wrap">
+      <h2 class="mid"><span class="en">Three <em>stages</em></span><span class="ko">분석·기획 / 실행·보조 / 사후관리</span></h2>
+      <div class="stgrid"><div class="stg s1"><span class="chip2">Diagnose · 진단</span><div class="no">01</div><h3><span class="en">Analysis &amp; Planning</span><span class="ko">분석·기획</span></h3><hr><p><b>Focus 핵심:</b> Four core checks before anything is built<br><span class="ko-s">시작 전에 네 가지를 먼저 확인합니다</span></p><p><b>Includes 구성:</b> Trade area, sales, store and marketing analysis<br><span class="ko-s">상권분석, 매출분석, 매장분석, 마케팅분석</span></p><p><b>Best for 추천:</b> Owners who want clear numbers before deciding<br><span class="ko-s">결정 전에 명확한 수치가 필요한 대표님</span></p></div><div class="stg s2"><span class="chip2">Build · 실행</span><div class="no">02</div><h3><span class="en">Execution &amp; Support</span><span class="ko">실행·보조</span></h3><hr><p><b>Focus 핵심:</b> Hands-on work in the store and in the market<br><span class="ko-s">매장과 시장에서의 실제 실행</span></p><p><b>Includes 구성:</b> On-site and marketing consulting, content production, recipe training, distribution pipeline design<br><span class="ko-s">현장컨설팅, 마케팅컨설팅, 컨텐츠제작, 레시피교육, 유통파이프라인설계</span></p><p><b>Best for 추천:</b> Owners who need a team to carry out the plan<br><span class="ko-s">계획을 현장에서 실행할 팀이 필요한 대표님</span></p></div><div class="stg s3"><span class="chip2">Sustain · 관리</span><div class="no">03</div><h3><span class="en">Aftercare</span><span class="ko">사후관리</span></h3><hr><p><b>Focus 핵심:</b> Keep results visible and keep improving<br><span class="ko-s">성과를 확인하고 계속 개선합니다</span></p><p><b>Includes 구성:</b> Ongoing data management, monthly sales trend, monthly improvement plan<br><span class="ko-s">데이터 지속관리, 월별 매출 추이, 월간 솔루션 개선안</span></p><p><b>Best for 추천:</b> Stores that want steady monthly improvement<br><span class="ko-s">매달 꾸준히 개선하고 싶은 매장</span></p></div></div>
+    </div>
+  </section>
+
+  <section class="band" id="dv-levels">
+    <div class="wrap">
+      <h2 class="mid"><span class="en">Service <em>levels</em></span><span class="ko">서비스 구성</span></h2>
+      <div class="pricegrid"><div class="pcell"><div class="plab">01 / PLAN</div><div class="pnum">290<small>만원</small></div><div class="pkrw">KRW 2,900,000</div><h3><span class="en">Start-up &amp; operations design</span><span class="ko">창업·운영 설계</span></h3><p class="psub">Focused on setting direction<br><span class="ko-s">방향 설정 중심</span></p></div><div class="pcell"><div class="plab">02 / BUILD</div><div class="pnum">590<small>만원</small></div><div class="pkrw">KRW 5,900,000</div><h3><span class="en">Hands-on build-out</span><span class="ko">실무 구축</span></h3><p class="psub">Focused on execution and operation<br><span class="ko-s">실행·운영 중심</span></p></div><div class="pcell"><div class="plab">03 / PARTNER</div><div class="pnum">990<small>만원</small></div><div class="pkrw">KRW 9,900,000</div><h3><span class="en">Brand growth</span><span class="ko">브랜드 성장</span></h3><p class="psub">Focused on close, ongoing support<br><span class="ko-s">밀착관리 중심</span></p></div></div>
+      <div class="common"><b>All courses include a 10,000-hour management term, about 417 days.</b><span class="ko-s">모든 코스 공통: 10,000시간 관리기간 · 약 417일</span></div>
+      <p class="cmphead">Detailed comparison <span class="ko-s">서비스 상세 비교</span></p>
+      <div class="lvlwrap" style="margin-top:14px"><table class="cmp"><thead><tr><th>Service<span class="ko-s">제공 서비스</span></th><th>PLAN</th><th>BUILD</th><th>PARTNER</th></tr></thead><tbody><tr><th scope="row">Initial diagnosis &amp; strategy<span class="ko-s">초기 진단 및 전략 수립</span></th><td><span class="v">Included</span><span class="ko-s">포함</span></td><td><span class="v">Included</span><span class="ko-s">포함</span></td><td><span class="v">Included</span><span class="ko-s">포함</span></td></tr><tr><th scope="row">Concept &amp; business plan review<span class="ko-s">콘셉트·사업계획 검토</span></th><td><span class="v">Included</span><span class="ko-s">포함</span></td><td><span class="v">Included</span><span class="ko-s">포함</span></td><td><span class="v">Included</span><span class="ko-s">포함</span></td></tr><tr><th scope="row">Bar layout &amp; equipment consulting<span class="ko-s">바 동선·장비 컨설팅</span></th><td><span class="v">Basic review</span><span class="ko-s">기본 검토</span></td><td><span class="v">Detailed design</span><span class="ko-s">상세 설계</span></td><td><span class="v">Detailed design</span><span class="ko-s">상세 설계</span></td></tr><tr><th scope="row">Menu development &amp; hands-on setup<span class="ko-s">메뉴 개발·실무 세팅</span></th><td><span class="dash">—</span></td><td><span class="v">Basic, 8 items</span><span class="ko-s">기본 8종</span></td><td><span class="v">12 items</span><span class="ko-s">12종</span></td></tr><tr><th scope="row">Brand strategy &amp; improvement<span class="ko-s">브랜드 전략 및 개선</span></th><td><span class="dash">—</span></td><td><span class="v">Basic direction</span><span class="ko-s">기본 방향</span></td><td><span class="v">In-depth</span><span class="ko-s">심화</span></td></tr><tr><th scope="row">On-site guidance<span class="ko-s">현장 지도</span></th><td><span class="dash">—</span></td><td><span class="v">1 visit</span><span class="ko-s">1회</span></td><td><span class="v">3 visits</span><span class="ko-s">3회</span></td></tr><tr><th scope="row">Operating metrics monitoring<span class="ko-s">운영 지표 모니터링</span></th><td><span class="v">Monthly</span><span class="ko-s">월 1회</span></td><td><span class="v">Monthly</span><span class="ko-s">월 1회</span></td><td><span class="v">Monthly</span><span class="ko-s">월 1회</span></td></tr><tr><th scope="row">Periodic analysis report<span class="ko-s">정기 분석 리포트</span></th><td><span class="v">Quarterly</span><span class="ko-s">분기 1회</span></td><td><span class="v">Monthly</span><span class="ko-s">월 1회</span></td><td><span class="v">Monthly</span><span class="ko-s">월 1회</span></td></tr><tr><th scope="row">1:1 strategy meetings<span class="ko-s">1:1 전략 미팅</span></th><td><span class="v">2 at the start</span><span class="ko-s">초기 2회</span></td><td><span class="v">3 at the start</span><span class="ko-s">초기 3회</span></td><td><span class="v">4 at the start + 4 quarterly</span><span class="ko-s">초기 4회 + 분기 4회</span></td></tr><tr class="lastrow"><th scope="row">Management term<span class="ko-s">관리 기간</span></th><td><span class="v">417 days</span><span class="ko-s">417일</span></td><td><span class="v">417 days</span><span class="ko-s">417일</span></td><td><span class="v">417 days</span><span class="ko-s">417일</span></td></tr></tbody></table></div>
+      <p class="fn">* Menu development is a proposal that includes adjusting and standardizing existing recipes. The volume, number of sessions and detailed deliverables of meetings, on-site guidance and reports are stated in the contract.<br><span class="ko-s">※ 메뉴 개발은 기존 레시피의 조정·표준화를 포함한 제안 범위입니다. 미팅, 현장 지도, 보고서의 분량·횟수 및 세부 산출물은 계약서에 명시합니다.</span></p>
+
+      <p class="label" style="margin-top:72px">Add-on options · 추가옵션</p>
+      <div class="addons"><div class="addon"><div><b>Store photography</b><span class="ko-s">매장촬영</span></div><div class="aprice">000원<span class="ko-s">KRW 000</span></div></div><div class="addon"><div><b>Food photography</b><span class="ko-s">음식촬영</span></div><div class="aprice">000원<span class="ko-s">KRW 000</span></div></div><div class="addon"><div><b>Review-campaign handling</b><span class="ko-s">체험단 모집 핸들링</span></div><div class="aprice">000원<span class="ko-s">KRW 000</span></div></div><div class="addon"><div><b>Brand logo design</b><span class="ko-s">브랜딩 로고제작</span></div><div class="aprice">000원<span class="ko-s">KRW 000</span></div></div><div class="addon"><div><b>Website production</b><span class="ko-s">홈페이지제작</span></div><div class="aprice">000원<span class="ko-s">KRW 000</span></div></div><div class="addon"><div><b>Staffing outsourcing</b><span class="ko-s">인력 아웃소싱</span></div><div class="aprice">000원<span class="ko-s">KRW 000</span></div></div></div>
+      <p class="fn" style="margin-top:14px">Individual prices are not set yet.<br><span class="ko-s">개별 단가는 추후 확정됩니다.</span></p>
+    </div>
+  </section>
+
+  <section class="band closing">
+    <div class="wrap cgrid">
+      <div>
+        <p class="label">MANHOUR / 10,000 HOURS CONSULTING</p>
+        <h2><span class="en">From the moment you start, <em>to every hour</em> of operation.</span><span class="ko">창업의 순간부터,<br>운영의 시간까지.</span></h2>
+      </div>
+      <div class="body">
+        <p class="en">A café matters more in operation than on opening day.</p>
+        <p class="ko">카페는 오픈보다 운영이 중요합니다.</p>
+        <p class="en" style="margin-top:20px">MANHOUR does not stop at building a store. We design the brand, observe operations, and propose improvements based on data.</p>
+        <p class="ko">만아워는 매장을 만드는 데서 끝나지 않습니다. 브랜드를 설계하고, 운영을 관찰하며, 데이터에 기반한 개선 방향을 제안합니다.</p>
+        <p class="en closer">Not a one-time consultation, but 10,000 hours alongside you.</p>
+        <p class="ko closer">한 번의 컨설팅이 아닌, 10,000시간의 동행.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="teal" id="dv-contact">
+    <div class="wrap">
+      <h2><span class="en">Tell us about your <em>store</em></span><span class="ko">매장에 대해 들려주세요</span></h2>
+      <div class="body" style="margin-top:24px"><p class="en">A short email is enough to start. We reply with how we would approach it.</p><p class="ko">간단한 이메일이면 충분합니다. 진행 방향을 정리해 답변드립니다.</p></div>
+      <div class="cta"><a class="btn solid" href="mailto:10000hours@gmail.com" style="background:var(--on-dark);color:var(--teal);border-color:var(--on-dark)"><span class="en">Inquire</span><span class="ko">문의하기</span></a></div>
+      <p class="mailline">10000hours@gmail.com <button class="linkbtn" type="button" data-copy="10000hours@gmail.com" style="border-color:#b9cbcd">Copy 복사</button><span class="copied" aria-live="polite"></span></p>
+    </div>
+  </div>
+</div>
+
+<!-- ============ PARTNER ============ -->
+<div class="view" id="v-partner">
+  <section class="ptop">
+    <div class="wrap">
+      <h1 class="center"><span class="en">Our <em>partners</em></span><span class="ko">파트너</span></h1>
+      <p class="pdesc">A café opens with many hands. We work with trusted specialists in each field and coordinate them as one team.<br><span class="ko-s">카페 하나가 문을 열기까지 많은 전문가가 필요합니다. 각 분야의 검증된 파트너와 하나의 팀처럼 움직입니다.</span></p>
+      <div class="pcols"><div class="pcol"><div class="plogo"><span class="wm">Photo studio</span><span class="phtag2">Logo to come</span></div><h3><span class="en">Photo studio</span><span class="ko">사진 스튜디오</span></h3><p>Store and food photography for your brand.<br><span class="ko-s">브랜드를 위한 매장·음식 촬영을 맡습니다.</span></p><a class="btn" href="mailto:10000hours@gmail.com?subject=Partner%20inquiry"><span class="en">Inquire</span><span class="ko">문의하기</span></a></div><div class="pcol"><div class="plogo"><span class="wm">First Class</span><span class="phtag2">Logo to come</span></div><h3><span class="en">First Class</span><span class="ko">퍼스트클래스</span></h3><p>Branding studio for logo and website production.<br><span class="ko-s">로고와 홈페이지 제작을 맡는 브랜딩 회사입니다.</span></p><a class="btn" href="mailto:10000hours@gmail.com?subject=Partner%20inquiry"><span class="en">Inquire</span><span class="ko">문의하기</span></a></div><div class="pcol"><div class="plogo"><span class="wm">Company name to come</span><span class="phtag2">Logo to come</span></div><h3><span class="en">Company name to come</span><span class="ko">회사명 (경남)</span></h3><p>Interior design partner based in Gyeongnam.<br><span class="ko-s">경남에 기반을 둔 인테리어 파트너입니다.</span></p><a class="btn" href="mailto:10000hours@gmail.com?subject=Partner%20inquiry"><span class="en">Inquire</span><span class="ko">문의하기</span></a></div></div>
+    </div>
+  </section>
+  <section class="band">
+    <div class="wrap">
+      <ul class="lwall" aria-label="Partners"><li><img src="partners/brita.png" alt="BRITA" style="width:105px"></li><li><img src="partners/starbucks.png" alt="Starbucks" style="width:89px"></li><li><img src="partners/samsung.png" alt="SAMSUNG" style="width:150px"></li><li><img src="partners/incheon.png" alt="Incheon Airport" style="width:118px"></li><li><img src="partners/va.png" alt="V&A" style="width:117px"></li><li><img src="partners/repa.png" alt="REPA" style="width:150px"></li><li><img src="partners/samtree.png" alt="샘트리커피" style="width:150px"></li><li><img src="partners/hamsung.png" alt="함성커피" style="width:130px"></li><li><img src="partners/vera.png" alt="VERA Coffee" style="width:113px"></li><li><img src="partners/mcs.png" alt="my coffee story" style="width:93px"></li><li><img src="partners/ucei.png" alt="UCEI" style="width:133px"></li><li><img src="partners/barista.png" alt="Barista" style="width:74px"></li><li><img src="partners/teba.png" alt="TEBA Interior Design" style="width:88px"></li><li><img src="partners/gn.png" alt="GN International" style="width:115px"></li><li><img src="partners/sh.png" alt="SH" style="width:84px"></li><li><img src="partners/fircl.png" alt="FIRCL" style="width:150px"></li><li><img src="partners/eiden.png" alt="EIDEN" style="width:150px"></li><li><img src="partners/fluux.png" alt="FLUUX" style="width:150px"></li><li><img src="partners/seoultech.png" alt="서울특별시 기술교육원" style="width:146px"></li><li><img src="partners/gyeonggi.png" alt="경기도교육청" style="width:89px"></li><li><img src="partners/semas.png" alt="소상공인시장진흥공단" style="width:97px"></li><li><img src="partners/gwanak.png" alt="더불어 관악구" style="width:150px"></li><li><img src="partners/kmtc.png" alt="한국경영기술지도사회" style="width:150px"></li><li><img src="partners/abmc.png" alt="아시아베이커리마스터셰프협회" style="width:150px"></li></ul>
+      <div class="cta"><a class="btn" href="mailto:10000hours@gmail.com?subject=Partner%20inquiry"><span class="en">Become a partner</span><span class="ko">파트너 문의</span></a></div>
+      <p class="note" style="margin-top:12px">10000hours@gmail.com</p>
+    </div>
+  </section>
+  <div class="logoband" aria-hidden="true"><div class="wrap"><img src="logo.png" alt=""></div></div>
+</div>
+
+<!-- ============ CAREERS ============ -->
+<div class="view" id="v-careers">
+  <section class="ptop" style="padding-bottom:56px">
+    <div class="wrap">
+      <h1 class="center"><span class="en"><em>Careers</em></span><span class="ko">만아워의 커리어</span></h1>
+      <p class="pdesc">Open roles are being prepared. To introduce yourself in the meantime, write to us.<br><span class="ko-s">채용 공고를 준비하고 있습니다. 그 전에 자기소개를 보내주셔도 좋습니다.</span></p>
+    </div>
+  </section>
+  <div class="car" id="car" role="region" aria-roledescription="carousel" aria-label="Photos">
+    <div class="track" id="ctrack"></div>
+    <button class="arrow prev" id="cprev" type="button" aria-label="Previous photo">&#8249;</button>
+    <button class="arrow next" id="cnext" type="button" aria-label="Next photo">&#8250;</button>
+  </div>
+  <p class="capt" id="ccapt" aria-live="polite"></p>
+  <section style="padding:56px 0 96px;text-align:center">
+    <div class="wrap">
+      <a class="btn" href="mailto:10000hours@gmail.com?subject=Introduction"><span class="en">Write to us</span><span class="ko">이메일 보내기</span></a>
+      <p class="note" style="margin-top:12px">10000hours@gmail.com</p>
+    </div>
+  </section>
+</div>
+
+<!-- ============ STUDIO ============ -->
+<div class="view" id="v-studio">
+  <div class="pagehead"><div class="wrap">
+    <p class="label">Studio</p>
+    <h1><span class="en">Studio <em>tools</em></span><span class="ko">창업 준비 도구</span></h1>
+    <div class="body">
+      <p class="en">Free calculators for planning a café. Enter figures in Korean won or US dollars.</p>
+      <p class="ko">카페 창업 준비를 위한 계산기입니다. 원화 또는 달러로 입력할 수 있습니다.</p>
+    </div>
+  </div></div>
+
+  <section id="stu-menu" style="padding-top:0">
+    <div class="wrap">
+      <div class="scards">
+        <button type="button" class="scard" data-open="tool-bep">
+          <p class="label">Calculator 01</p>
+          <h3><span class="en">Break-even point</span><span class="ko">손익분기점 계산기</span></h3>
+          <p class="sdesc">Find how much you need to sell each month and each day to cover your costs, and how long it takes to earn back your investment.<span class="ko">월·일 목표 매출과 하루 필요 고객 수, 객단가별 투자비 회수 기간을 계산합니다.</span></p>
+          <dl class="sio">
+            <div><dt>Enter<span class="ko">입력</span></dt><dd>Fixed costs, variable costs, start-up investment<span class="ko">고정비, 변동비, 초기 투자비</span></dd></div>
+            <div><dt>Get<span class="ko">결과</span></dt><dd>Break-even sales, customers per day, payback period<span class="ko">손익분기 매출, 하루 필요 고객 수, 회수 기간</span></dd></div>
+          </dl>
+          <span class="sopen">Open <span class="kor">열기</span> →</span>
+        </button>
+        <button type="button" class="scard" data-open="tool-menu">
+          <p class="label">Calculator 02</p>
+          <h3><span class="en">Menu cost</span><span class="ko">메뉴 원가 계산기</span></h3>
+          <p class="sdesc">Add the ingredient costs of each menu item to see its total cost, cost rate and margin, and compare several items side by side.<span class="ko">재료별 원가를 입력해 메뉴별 총 원가, 원가율, 마진을 비교합니다.</span></p>
+          <dl class="sio">
+            <div><dt>Enter<span class="ko">입력</span></dt><dd>Selling price and ingredient costs per menu item<span class="ko">메뉴별 판매가와 재료 원가</span></dd></div>
+            <div><dt>Get<span class="ko">결과</span></dt><dd>Total cost, cost rate, margin per item<span class="ko">총 원가, 원가율, 1개당 마진</span></dd></div>
+          </dl>
+          <span class="sopen">Open <span class="kor">열기</span> →</span>
+        </button>
+      </div>
+      <p class="note" style="margin-top:24px">Free to use. Nothing you enter is saved or sent. 무료로 사용할 수 있으며, 입력한 내용은 저장되거나 전송되지 않습니다.</p>
+    </div>
+  </section>
+
+  <section id="stu-tools" style="padding-top:0" hidden>
+    <div class="wrap">
+      <div class="stubar">
+        <button type="button" class="linkbtn" id="stu-back" style="margin:0">← All tools <span class="kor">전체 도구</span></button>
+    <div class="toolbar" style="margin-top:0">
+      <div class="field"><label>Currency <span class="ko">통화</span></label>
+        <div class="seg" role="group" aria-label="Currency"><button type="button" id="c-krw" aria-pressed="true">KRW ₩</button><button type="button" id="c-usd" aria-pressed="false">USD $</button></div></div>
+      <div class="field" style="width:200px"><label for="rate">KRW per 1 USD <span class="ko">환율 (직접 수정)</span></label><input id="rate" type="number" min="1" step="1" value="1400"></div>
+    </div>
+      </div>
+      <!-- Tool 01 -->
+      <div class="tool" id="tool-bep">
+        <div class="in">
+          <p class="label">Calculator 01</p>
+          <h3><span class="en">Break-even point</span><span class="ko">손익분기점 계산기</span></h3>
+          <p class="label step">Step 01 · Fixed costs / month <span class="kor">월 고정비</span></p>
+          <div class="fields tight">
+            <div class="field"><label for="b-rent">Rent <span class="ko">월 임대료</span></label><input class="money" id="b-rent" type="number" min="0" step="any" value="3000000"></div>
+            <div class="field"><label for="b-labor">Labor (incl. owner) <span class="ko">월 인건비 (본인 포함)</span></label><input class="money" id="b-labor" type="number" min="0" step="any" value="4000000"></div>
+            <div class="field"><label for="b-util">Utilities and management fees <span class="ko">관리비 · 공과금</span></label><input class="money" id="b-util" type="number" min="0" step="any" value="400000"></div>
+            <div class="field"><label for="b-other">Other fixed <span class="ko">기타 고정비</span></label><input class="money" id="b-other" type="number" min="0" step="any" value="1100000"><span class="hint">Insurance, telecom, subscriptions · 보험료, 통신비, 구독료 등</span></div>
+          </div>
+          <p class="label step">Step 02 · Variable costs <span class="kor">변동비</span></p>
+          <div class="fields tight">
+            <div class="field"><label for="b-cost">Cost of goods % <span class="ko">원재료 원가율 %</span></label><input id="b-cost" type="number" min="0" max="99" step="1" value="32"><span class="hint">Coffee shops: roughly 25–35% · 커피 25~35%</span></div>
+            <div class="field"><label for="b-ticket">Average ticket <span class="ko">평균 객단가</span></label><input class="money" id="b-ticket" type="number" min="0" step="any" value="6500"></div>
+            <div class="field"><label for="b-days">Open days / month <span class="ko">월 영업일수</span></label><input id="b-days" type="number" min="1" max="31" step="1" value="26"></div>
+            <div class="field"><label for="b-var">Other variable % <span class="ko">기타 변동비율 %</span></label><input id="b-var" type="number" min="0" max="50" step="1" value="5"><span class="hint">Packaging, supplies · 포장재, 소모품 등</span></div>
+          </div>
+          <p class="label step">Step 03 · Start-up investment <span class="kor">초기 투자비용 (선택)</span></p>
+          <div class="fields tight">
+            <div class="field"><label for="b-int">Interior and construction <span class="ko">인테리어 · 시공비</span></label><input class="money" id="b-int" type="number" min="0" step="any" value="30000000"></div>
+            <div class="field"><label for="b-mach">Machines and equipment <span class="ko">머신 · 장비비</span></label><input class="money" id="b-mach" type="number" min="0" step="any" value="15000000"></div>
+            <div class="field"><label for="b-dep">Deposit <span class="ko">보증금</span></label><input class="money" id="b-dep" type="number" min="0" step="any" value="20000000"><span class="hint">Refundable, but counts as capital tied up · 회수 가능하나 기회비용 포함</span></div>
+            <div class="field"><label for="b-init">Other start-up costs <span class="ko">기타 초기 비용</span></label><input class="money" id="b-init" type="number" min="0" step="any" value="5000000"><span class="hint">Fixtures, permits · 집기, 소모품, 인허가비 등</span></div>
+          </div>
+          <p class="note" style="margin-top:16px">Example values shown. Leave Step 03 at zero to hide payback. 예시 값이 입력되어 있습니다. 투자비를 0으로 두면 회수 기간은 표시되지 않습니다.</p>
+        </div>
+        <div class="out">
+          <dl class="res">
+            <div><dt>Fixed costs / month<div class="ko">월 고정비 합계</div></dt><dd id="r-fixed">-</dd></div>
+            <div><dt>Break-even sales / month<div class="ko">월 손익분기 매출</div></dt><dd id="r-sales">-</dd></div>
+            <div><dt>Target sales / day<div class="ko">일 목표 매출</div></dt><dd id="r-daily">-</dd></div>
+            <div><dt>Customers needed / day<div class="ko">하루 필요 고객 수</div></dt><dd id="r-cust">-</dd></div>
+            <div><dt>Total investment<div class="ko">초기 투자 합계</div></dt><dd id="r-invest">-</dd></div>
+          </dl>
+          <div class="comment" id="b-comment" aria-live="polite"></div>
+        </div>
+        <div class="simwrap">
+          <p class="label">Average ticket simulation · 객단가별 시뮬레이션</p>
+          <table class="sim">
+            <thead><tr>
+              <th scope="col">Average ticket<span class="ko">객단가</span></th>
+              <th scope="col">Customers / day<span class="ko">하루 필요 고객 수</span></th>
+              <th scope="col">Change<span class="ko">현재 대비</span></th>
+              <th scope="col">Payback<span class="ko">투자비 회수</span></th>
+              <th scope="col">Vs. now<span class="ko">회수 기간 변화</span></th>
+            </tr></thead>
+            <tbody id="sim-body"></tbody>
+          </table>
+          <p class="note" style="margin-top:14px">A higher ticket needs fewer customers to break even. Payback assumes you serve 20% more customers than today's break-even count, and that count stays the same in every row. 객단가가 높을수록 손익분기에 필요한 고객 수가 줄어듭니다. 회수 기간은 현재 손익분기 고객 수보다 20% 더 판매한다고 가정하며, 모든 행에서 같은 고객 수로 계산합니다.</p>
+        </div>
+      </div>
+
+      <!-- Tool 02 -->
+      <div class="tool" id="tool-menu">
+        <div class="in">
+          <p class="label">Calculator 02</p>
+          <h3><span class="en">Menu cost</span><span class="ko">메뉴 원가 계산기</span></h3>
+          <p class="note" style="margin-top:12px">Enter the ingredient cost for one serving of each menu item. Rough figures are fine. 메뉴 1개 기준으로 재료별 원가를 입력하세요. 대략적인 금액도 괜찮습니다.</p>
+          <div id="menus"></div>
+          <button class="addmenu" type="button" id="add-menu">+ Add menu item <span class="kor">메뉴 추가</span></button>
+        </div>
+        <div class="out">
+          <p class="label">Cost analysis · 원가 분석</p>
+          <table class="sim mres">
+            <thead><tr>
+              <th scope="col">Menu<span class="ko">메뉴</span></th>
+              <th scope="col">Cost<span class="ko">총 원가</span></th>
+              <th scope="col">Cost rate<span class="ko">원가율</span></th>
+              <th scope="col">Margin<span class="ko">마진</span></th>
+            </tr></thead>
+            <tbody id="menu-body"></tbody>
+          </table>
+          <p class="note" style="margin-top:14px">Cost rate: up to 30% good, 30–40% fair, above 40% needs work. 원가율 30% 이하 우수, 30~40% 보통, 40% 초과 개선 필요.</p>
+          <div class="comment" id="m-comment" aria-live="polite"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div><a class="logo" href="#home"><img src="logo.png" alt="MANHOUR" style="height:48px"></a><p style="margin-top:12px">© 2026 MANHOUR. Business registration details to follow.<br>사업자 정보는 등록 후 기재합니다.</p></div>
+    <div>
+      <nav aria-label="Footer" style="flex-wrap:wrap">
+        <a href="#about">About</a><a href="#develop-with-us">Develop with us</a><a href="#partner">Partner</a><a href="#careers">Careers</a><a href="#studio">Studio</a>
+      </nav>
+      <p style="margin-top:16px">10000hours@gmail.com</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  /* ---------- routing (plain #name hashes) ---------- */
+  var VIEWS = ['home', 'about', 'develop-with-us', 'partner', 'careers', 'studio'];
+  function route() {
+    var h = (location.hash || '#home').slice(1);
+    if (VIEWS.indexOf(h) < 0) h = 'home';
+    VIEWS.forEach(function (v) { document.getElementById('v-' + v).classList.toggle('on', v === h); });
+    document.querySelectorAll('[data-nav]').forEach(function (a) {
+      if (a.dataset.nav === h) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
+    });
+    window.scrollTo(0, 0);
+    setBand(h);
+    carousel(h === 'careers');
+    if (h === 'studio') { studioHome(); calcBep(); calcMenu(); }
+  }
+  function fit() { var w = window.innerWidth; document.documentElement.style.zoom = w < 1280 ? (w / 1280) : ''; }
+  fit(); window.addEventListener('resize', fit);
+  window.addEventListener('hashchange', route);
+
+
+  /* ---------- video band under the nav ----------
+     Put one video file per menu here (e.g. 'video/home.mp4') and publish the files with the page.
+     Empty string = animated placeholder. */
+  var VIDEOS = { 'home': '', 'about': '', 'develop-with-us': '', 'partner': '', 'careers': '', 'studio': '' };
+  var MODES = { 'home': 'grid', 'about': 'lines', 'develop-with-us': 'rings', 'partner': 'net', 'careers': 'steps', 'studio': 'bars' };
+  var bandC = document.getElementById('bandc'), bandV = document.getElementById('bandv'), bandTag = document.getElementById('bandtag');
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var raf = 0, curMode = 'grid', nodes = [];
+  function frame(t) {
+    var s = bandC.clientWidth, h = bandC.clientHeight; if (!s || !h) return;
+    var dpr = window.devicePixelRatio || 1;
+    if (bandC.width !== Math.round(s * dpr) || bandC.height !== Math.round(h * dpr)) { bandC.width = Math.round(s * dpr); bandC.height = Math.round(h * dpr); }
+    var x = bandC.getContext('2d'); x.setTransform(dpr, 0, 0, dpr, 0, 0); x.clearRect(0, 0, s, h);
+    var m = curMode, col = function (a) { return 'rgba(184,224,198,' + a.toFixed(3) + ')'; }, i, j;
+    if (m === 'grid') {
+      var g = 16, cols = Math.ceil(s / g), rows = Math.ceil(h / g);
+      for (j = 0; j < rows; j++) for (i = 0; i < cols; i++) {
+        var w = 0.5 + 0.5 * Math.sin(i * 0.22 - t * 1.3 + j * 0.15);
+        x.fillStyle = col(0.08 + 0.5 * w * w); x.fillRect(i * g + 4, j * g + 4, 6, 6);
+      }
+    } else if (m === 'lines') {
+      for (j = 0; j < 16; j++) {
+        x.beginPath(); x.strokeStyle = col(0.12 + 0.3 * (j / 16)); x.lineWidth = 1.2;
+        for (i = 0; i <= s; i += 8) { var y = h * (j + 0.5) / 16 + Math.sin(i * 0.012 + t * 0.8 + j * 0.5) * 14; if (i === 0) x.moveTo(i, y); else x.lineTo(i, y); }
+        x.stroke();
+      }
+    } else if (m === 'rings') {
+      [0.25, 0.5, 0.75].forEach(function (cx, k) {
+        for (i = 0; i < 6; i++) {
+          var r = ((i + (t * 0.35 + k * 0.3)) % 6) * (h * 0.14);
+          x.beginPath(); x.strokeStyle = col(0.5 * (1 - r / (h * 0.84))); x.lineWidth = 1.4; x.arc(s * cx, h / 2, r, 0, 6.2832); x.stroke();
+        }
+      });
+    } else if (m === 'net') {
+      if (!nodes.length) for (i = 0; i < 46; i++) nodes.push({ x: Math.random(), y: Math.random(), vx: (Math.random() - 0.5) * 0.0004, vy: (Math.random() - 0.5) * 0.0004 });
+      nodes.forEach(function (n) { n.x += n.vx; n.y += n.vy; if (n.x < 0 || n.x > 1) n.vx *= -1; if (n.y < 0 || n.y > 1) n.vy *= -1; });
+      for (i = 0; i < nodes.length; i++) for (j = i + 1; j < nodes.length; j++) {
+        var dx = (nodes[i].x - nodes[j].x) * s, dy = (nodes[i].y - nodes[j].y) * h, d = Math.sqrt(dx * dx + dy * dy);
+        if (d < 150) { x.strokeStyle = col(0.35 * (1 - d / 150)); x.lineWidth = 1; x.beginPath(); x.moveTo(nodes[i].x * s, nodes[i].y * h); x.lineTo(nodes[j].x * s, nodes[j].y * h); x.stroke(); }
+      }
+      nodes.forEach(function (n) { x.fillStyle = col(0.7); x.beginPath(); x.arc(n.x * s, n.y * h, 2.4, 0, 6.2832); x.fill(); });
+    } else if (m === 'steps') {
+      var n = 22, bw = s / n;
+      for (i = 0; i < n; i++) { var bh = h * (0.12 + 0.78 * (i / n)) * (0.92 + 0.08 * Math.sin(t * 1.2 + i * 0.5)); x.fillStyle = col(0.1 + 0.4 * (i / n)); x.fillRect(i * bw + 3, h - bh, bw - 6, bh); }
+    } else {
+      var nb = 30, bw2 = s / nb;
+      for (i = 0; i < nb; i++) { var bh2 = h * (0.2 + 0.6 * Math.abs(Math.sin(i * 1.7 + t * 0.6))); x.fillStyle = col(0.18 + 0.3 * (bh2 / h)); x.fillRect(i * bw2 + 4, h - bh2, bw2 - 8, bh2); }
+    }
+  }
+  function loop(ts) { frame(ts / 1000); raf = requestAnimationFrame(loop); }
+  var POSTERS = { 'home': 'home-hero.png' };
+  function setBand(v) {
+    cancelAnimationFrame(raf);
+    document.getElementById('herotext').style.display = v === 'home' ? 'flex' : 'none';
+    document.getElementById('abouttext').style.display = v === 'about' ? 'flex' : 'none';
+    var src = VIDEOS[v], poster = POSTERS[v], bi = document.getElementById('bandimg');
+    document.getElementById('vband').classList.toggle('tall', !!poster);
+    if (poster) {
+      bandV.pause(); bandV.style.display = 'none'; bandC.style.display = 'none';
+      if (bi.getAttribute('src') !== poster) bi.setAttribute('src', poster);
+      bi.style.display = 'block'; bandTag.textContent = ''; return;
+    }
+    bi.style.display = 'none';
+    if (src) {
+      bandC.style.display = 'none'; bandV.style.display = 'block';
+      if (bandV.getAttribute('src') !== src) bandV.setAttribute('src', src);
+      var p = bandV.play(); if (p && p.catch) p.catch(function () {});
+      bandTag.textContent = '';
+    } else {
+      bandV.pause(); bandV.style.display = 'none'; bandC.style.display = 'block';
+      curMode = MODES[v] || 'grid'; bandTag.textContent = 'Video placeholder · ' + v;
+      if (reduce) frame(0); else raf = requestAnimationFrame(loop);
+    }
+  }
+  window.addEventListener('resize', function () { if (reduce) frame(0); });
+
+  /* ---------- currency ---------- */
+  var cur = 'KRW';
+  var rateEl = document.getElementById('rate');
+  function rate() { var r = parseFloat(rateEl.value); return r > 0 ? r : 1400; }
+  function fmt(v) {
+    if (!isFinite(v)) return '-';
+    return cur === 'KRW'
+      ? '₩' + Math.round(v).toLocaleString('en-US')
+      : '$' + v.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  }
+  function setCur(next) {
+    if (next === cur) return;
+    var f = next === 'USD' ? 1 / rate() : rate();
+    document.querySelectorAll('input.money').forEach(function (el) {
+      var v = parseFloat(el.value);
+      if (isFinite(v)) el.value = next === 'USD' ? (v * f).toFixed(2) : Math.round(v * f);
+      el.step = next === 'USD' ? '0.01' : 'any';
+    });
+    cur = next;
+    document.getElementById('c-krw').setAttribute('aria-pressed', cur === 'KRW');
+    document.getElementById('c-usd').setAttribute('aria-pressed', cur === 'USD');
+    calcBep(); calcMenu();
+  }
+  document.getElementById('c-krw').addEventListener('click', function () { setCur('KRW'); });
+  document.getElementById('c-usd').addEventListener('click', function () { setCur('USD'); });
+
+  function num(id) { var v = parseFloat(document.getElementById(id).value); return isFinite(v) ? v : 0; }
+  function comment(el, en, ko) { el.innerHTML = '<div>' + en + '</div><div class="ko">' + ko + '</div>'; }
+
+  /* ---------- break-even ---------- */
+  var SIM = [0.8, 0.9, 1, 1.2, 1.5];
+  function span(txt) { return Math.ceil(txt).toLocaleString('en-US'); }
+  function term(months) {
+    var y = Math.floor(months / 12), m = months % 12;
+    return y > 0 ? y + 'y' + (m ? ' ' + m + 'm' : '') + '<span class="sub">' + y + '년' + (m ? ' ' + m + '개월' : '') + '</span>'
+                 : months + ' mo<span class="sub">' + months + '개월</span>';
+  }
+  function calcBep() {
+    var ticket = num('b-ticket'), cogs = num('b-cost') / 100, ovar = num('b-var') / 100;
+    var fixed = num('b-rent') + num('b-labor') + num('b-util') + num('b-other');
+    var days = Math.max(1, num('b-days'));
+    var invest = num('b-int') + num('b-mach') + num('b-dep') + num('b-init');
+    var contrib = 1 - cogs - ovar;
+    var out = document.getElementById('b-comment'), body = document.getElementById('sim-body');
+    document.getElementById('r-fixed').textContent = fmt(fixed);
+    document.getElementById('r-invest').textContent = invest > 0 ? fmt(invest) : '-';
+    if (ticket <= 0 || contrib <= 0) {
+      ['r-sales', 'r-daily', 'r-cust'].forEach(function (i) { document.getElementById(i).textContent = '-'; });
+      body.innerHTML = '';
+      comment(out, 'Enter an average ticket above zero. Cost of goods plus other variable costs must stay below 100%.', '객단가는 0보다 크게 입력하고, 원가율과 기타 변동비율의 합은 100% 미만이어야 합니다.');
+      return;
+    }
+    var sales = fixed / contrib, daily = sales / days, cust = daily / ticket;
+    document.getElementById('r-sales').textContent = fmt(sales);
+    document.getElementById('r-daily').textContent = fmt(daily);
+    document.getElementById('r-cust').textContent = span(cust);
+
+    var baseProfit = sales * 1.2 * contrib - fixed;
+    var baseMonths = invest > 0 && baseProfit > 0 ? Math.ceil(invest / baseProfit) : 0;
+    var baseCust = Math.ceil(cust);
+    body.innerHTML = '';
+    SIM.forEach(function (m) {
+      var price = ticket * m, c = Math.ceil(daily / price), d = c - baseCust;
+      var chg = m === 1 ? '<span class="sub">Current · 현재</span>' : (d < 0 ? '<span class="up">▼ ' + Math.abs(d) + '</span>' : '<span class="dn">▲ ' + d + '</span>');
+      var pay = '-', vs = '-';
+      if (invest > 0) {
+        var profit = sales * 1.2 * m * contrib - fixed;
+        if (profit > 0) {
+          var mo = Math.ceil(invest / profit);
+          pay = term(mo);
+          if (m === 1) vs = '<span class="sub">Baseline · 기준</span>';
+          else if (!baseMonths) vs = '-';
+          else vs = (baseMonths - mo > 0) ? '<span class="up">▼ ' + (baseMonths - mo) + ' mo</span>' : '<span class="dn">▲ ' + Math.abs(baseMonths - mo) + ' mo</span>';
+        } else { pay = '<span class="dn">No profit<span class="sub">수익 불가</span></span>'; }
+      }
+      var tr = document.createElement('tr'); if (m === 1) tr.className = 'now';
+      tr.innerHTML = '<td>' + fmt(price) + '</td><td>' + c.toLocaleString('en-US') + '</td><td>' + chg + '</td><td>' + pay + '</td><td>' + vs + '</td>';
+      body.appendChild(tr);
+    });
+    if (cogs > 0.35) {
+      comment(out, 'Your cost rate is high. Every sale leaves a thin margin, so the break-even moves up quickly. Review recipes, supplier prices, or bundle high-cost items into set menus.',
+        '원가율이 높은 편입니다. 판매할 때마다 남는 마진이 얇아 손익분기가 빠르게 올라갑니다. 레시피·매입가를 점검하거나 고원가 메뉴를 세트메뉴로 묶는 방안을 검토해보세요.');
+    } else {
+      comment(out, 'Your cost rate is within a typical range. To lower the daily customer target, raise the average ticket with set menus or add-ons, or reduce fixed costs.',
+        '원가율은 일반적인 범위입니다. 하루 필요 고객 수를 줄이려면 세트메뉴·추가 메뉴로 객단가를 올리거나 고정비를 줄이는 방법이 있습니다.');
+    }
+  }
+  document.querySelectorAll('#b-ticket,#b-cost,#b-var,#b-rent,#b-labor,#b-util,#b-other,#b-days,#b-int,#b-mach,#b-dep,#b-init').forEach(function (el) { el.addEventListener('input', calcBep); });
+
+  /* ---------- menu cost ---------- */
+  var menusEl = document.getElementById('menus');
+  function conv(v) { return cur === 'USD' ? (v / rate()).toFixed(2) : v; }
+  function ingRow(card, n, c) {
+    var r = document.createElement('div'); r.className = 'ing2';
+    r.innerHTML = '<input type="text" aria-label="Ingredient name 재료명" placeholder="Ingredient · 재료" value="' + n + '"><input class="money" type="number" min="0" step="' + (cur === 'USD' ? '0.01' : 'any') + '" aria-label="Ingredient cost 재료 원가" placeholder="0" value="' + (c ? conv(c) : '') + '"><button type="button" class="ing-del" aria-label="Remove ingredient 재료 삭제">×</button>';
+    card.querySelector('.ings').appendChild(r);
+  }
+  function addMenu(name, price, list) {
+    var card = document.createElement('div'); card.className = 'mcard';
+    card.innerHTML = '<button type="button" class="mdel" aria-label="Remove menu item 메뉴 삭제">×</button>' +
+      '<div class="fields"><div class="field"><label>Menu item <span class="ko">메뉴명</span></label><input class="m-name" type="text" value="' + name + '"></div>' +
+      '<div class="field"><label>Selling price <span class="ko">판매가</span></label><input class="money m-price" type="number" min="0" step="' + (cur === 'USD' ? '0.01' : 'any') + '" value="' + (price ? conv(price) : '') + '"></div></div>' +
+      '<p class="label" style="margin:18px 0 0">Ingredients per item · 1개당 재료</p><div class="ings"></div>' +
+      '<button type="button" class="linkbtn add-ing">+ Add ingredient 재료 추가</button>' +
+      '<div class="mtot"><span>Total cost · 총 원가</span><b class="m-total">-</b></div>';
+    menusEl.appendChild(card);
+    (list || [['', 0], ['', 0]]).forEach(function (it) { ingRow(card, it[0], it[1]); });
+  }
+  menusEl.addEventListener('click', function (e) {
+    var t = e.target, card = t.closest('.mcard'); if (!card) return;
+    if (t.classList.contains('add-ing')) { ingRow(card, '', 0); }
+    else if (t.classList.contains('ing-del')) { if (card.querySelectorAll('.ing2').length > 1) { t.closest('.ing2').remove(); calcMenu(); } }
+    else if (t.classList.contains('mdel')) { if (menusEl.querySelectorAll('.mcard').length > 1) { card.remove(); calcMenu(); } }
+  });
+  menusEl.addEventListener('input', calcMenu);
+  document.getElementById('add-menu').addEventListener('click', function () { addMenu('', 0, null); calcMenu(); });
+  function esc(t) { return String(t).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  function calcMenu() {
+    var body = document.getElementById('menu-body'), out = document.getElementById('m-comment');
+    body.innerHTML = ''; var worst = null, rows = 0;
+    menusEl.querySelectorAll('.mcard').forEach(function (card, i) {
+      var name = card.querySelector('.m-name').value.trim() || ('Menu ' + (i + 1));
+      var price = parseFloat(card.querySelector('.m-price').value) || 0, cost = 0;
+      card.querySelectorAll('.ing2 input.money').forEach(function (x) { cost += parseFloat(x.value) || 0; });
+      card.querySelector('.m-total').textContent = fmt(cost);
+      if (price <= 0 || cost <= 0) return;
+      rows++;
+      var rt = cost / price * 100, tier = rt < 30 ? ['t-good', 'Good · 우수'] : rt <= 40 ? ['t-mid', 'Fair · 보통'] : ['t-high', 'High · 개선 필요'];
+      if (!worst || rt > worst.rt) worst = { name: name, rt: rt };
+      var tr = document.createElement('tr');
+      tr.innerHTML = '<td>' + esc(name) + '<small>' + fmt(price) + '</small></td><td>' + fmt(cost) + '</td><td class="rtier ' + tier[0] + '">' + rt.toFixed(1) + '%<span class="sub">' + tier[1] + '</span></td><td>' + fmt(price - cost) + '</td>';
+      body.appendChild(tr);
+    });
+    if (!rows) { comment(out, 'Enter a selling price and at least one ingredient cost to see the analysis.', '판매가와 재료 원가를 하나 이상 입력하면 분석 결과가 나타납니다.'); return; }
+    if (worst.rt > 40) {
+      comment(out, esc(worst.name) + ' has the highest cost rate at ' + worst.rt.toFixed(1) + '%. Consider adjusting the price, changing the supplier, or pairing it with a lower-cost item in a set menu.',
+        esc(worst.name) + '의 원가율이 ' + worst.rt.toFixed(1) + '%로 가장 높습니다. 판매가 조정, 재료 수급처 변경, 원가가 낮은 메뉴와의 세트 구성을 검토해보세요.');
+    } else if (worst.rt >= 30) {
+      comment(out, esc(worst.name) + ' has the highest cost rate at ' + worst.rt.toFixed(1) + '%, in the fair range. Keep tracking it whenever ingredient prices change.',
+        esc(worst.name) + '의 원가율이 ' + worst.rt.toFixed(1) + '%로 가장 높고 보통 수준입니다. 재료 가격이 바뀔 때마다 다시 확인하세요.');
+    } else {
+      comment(out, 'Every menu item is at or below 30% cost rate. Check that your prices are still competitive for your area.',
+        '모든 메뉴의 원가율이 30% 이하입니다. 상권 대비 가격 경쟁력이 있는지 함께 확인해보세요.');
+    }
+  }
+  addMenu('Americano', 4500, [['Coffee beans', 520], ['Cup and lid', 180], ['Water and other', 50]]);
+  addMenu('Café latte', 5000, [['Coffee beans', 520], ['Milk', 450], ['Cup and lid', 180], ['Syrup and other', 60]]);
+
+  /* ---------- studio: tool picker ---------- */
+  var stuMenu = document.getElementById('stu-menu'), stuTools = document.getElementById('stu-tools');
+  function studioHome() {
+    stuTools.hidden = true; stuMenu.hidden = false;
+    document.getElementById('tool-bep').hidden = true; document.getElementById('tool-menu').hidden = true;
+  }
+  function studioOpen(id) {
+    stuMenu.hidden = true; stuTools.hidden = false;
+    document.getElementById('tool-bep').hidden = id !== 'tool-bep';
+    document.getElementById('tool-menu').hidden = id !== 'tool-menu';
+    if (id === 'tool-bep') calcBep(); else calcMenu();
+    stuTools.scrollIntoView({ behavior: 'auto', block: 'start' }); window.scrollBy(0, -8);
+  }
+  document.querySelectorAll('[data-open]').forEach(function (b) { b.addEventListener('click', function () { studioOpen(b.dataset.open); }); });
+  document.getElementById('stu-back').addEventListener('click', function () { studioHome(); document.getElementById('v-studio').scrollIntoView({ behavior: 'auto', block: 'start' }); });
+  studioHome();
+
+  document.querySelectorAll('[data-go]').forEach(function (b) {
+    b.addEventListener('click', function () { var t = document.getElementById(b.dataset.go); if (t) t.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' }); });
+  });
+
+
+  /* ---------- careers carousel ---------- */
+  var W = 440, G = 18, N = 20, cIdx = N, cTimer = 0;
+  var cTrack = document.getElementById('ctrack'), cCapt = document.getElementById('ccapt');
+  function dots(ratio, fade) {
+    var o = '<rect width="440" height="330" fill="#002e17"/>';
+    for (var r = 0; r < 16; r++) for (var c = 0; c < 22; c++) {
+      var k = (r * 22 + c) / 352, lit = k < ratio;
+      o += '<rect x="' + (c * 20 + 5) + '" y="' + (r * 20 + 5) + '" width="10" height="10" fill="' + (lit ? '#b8e0c6' : '#0f4a2c') + '"' + (lit && fade ? ' opacity="' + (0.3 + 0.7 * k / ratio).toFixed(2) + '"' : '') + '/>';
+    }
+    return o;
+  }
+  var ARTS = [
+    function () { return dots(0.3); },
+    function () { return '<rect width="440" height="330" fill="#002e17"/><g fill="none" stroke="#b8e0c6" stroke-width="2"><circle cx="220" cy="165" r="40"/><circle cx="220" cy="165" r="80"/><circle cx="220" cy="165" r="120"/><circle cx="220" cy="165" r="160"/></g>'; },
+    function () { return dots(0.62); },
+    function () { return '<rect width="440" height="330" fill="#002e17"/><g fill="none" stroke="#b8e0c6" stroke-width="2"><rect x="100" y="60" width="140" height="140"/><rect x="150" y="95" width="140" height="140"/><rect x="200" y="130" width="140" height="140" fill="#b8e0c6" fill-opacity=".18"/></g>'; },
+    function () { return '<rect width="440" height="330" fill="#002e17"/><g fill="none" stroke="#b8e0c6" stroke-width="2"><circle cx="220" cy="165" r="110"/><ellipse cx="220" cy="165" rx="50" ry="110"/><ellipse cx="220" cy="165" rx="110" ry="44"/><path d="M110 165h220M220 55v220"/></g>'; },
+    function () { var o = '<rect width="440" height="330" fill="#002e17"/>'; for (var i = 0; i < 12; i++) { var h = 40 + i * 20; o += '<rect x="' + (28 + i * 33) + '" y="' + (310 - h) + '" width="22" height="' + h + '" fill="#b8e0c6" fill-opacity="' + (0.25 + i * 0.06).toFixed(2) + '"/>'; } return o; },
+    function () { return dots(1, true); }
+  ];
+  var slidesHtml = '';
+  for (var rep3 = 0; rep3 < 3; rep3++) for (var q = 0; q < N; q++) slidesHtml += '<div class="slide" aria-hidden="' + (rep3 === 1 ? 'false' : 'true') + '"><img src="work/w' + (q < 9 ? '0' : '') + (q + 1) + '.jpg" alt="" draggable="false"></div>';
+  cTrack.innerHTML = slidesHtml;
+  function cMove(noAnim) {
+    cTrack.style.transition = noAnim ? 'none' : '';
+    cTrack.style.transform = 'translateX(' + (-(cIdx * (W + G) + W / 2)) + 'px)';
+    
+  }
+  function cGo(d) {
+    cIdx += d; cMove(false);
+    if (cIdx >= 2 * N || cIdx < N) {
+      setTimeout(function () { cIdx = cIdx >= 2 * N ? cIdx - N : cIdx + N; cMove(true); }, reduce ? 0 : 720);
+    }
+  }
+  document.getElementById('cnext').addEventListener('click', function () { cGo(1); });
+  document.getElementById('cprev').addEventListener('click', function () { cGo(-1); });
+  function carousel(on) {
+    clearInterval(cTimer);
+    if (on) { cMove(true); if (!reduce) cTimer = setInterval(function () { cGo(1); }, 4200); }
+  }
+  document.getElementById('car').addEventListener('mouseenter', function () { clearInterval(cTimer); });
+  document.getElementById('car').addEventListener('mouseleave', function () { if (document.getElementById('v-careers').classList.contains('on') && !reduce) { clearInterval(cTimer); cTimer = setInterval(function () { cGo(1); }, 4200); } });
+
+  /* ---------- track record strip ---------- */
+  (function () {
+    var tr = document.getElementById('strack'), pv = document.getElementById('sprev'), nx = document.getElementById('snext');
+    if (!tr) return;
+    function upd() { pv.disabled = tr.scrollLeft < 4; nx.disabled = tr.scrollLeft + tr.clientWidth >= tr.scrollWidth - 4; }
+    function go(d) { tr.scrollBy({ left: d * Math.round(tr.clientWidth * 0.8), behavior: reduce ? 'auto' : 'smooth' }); }
+    pv.addEventListener('click', function () { go(-1); });
+    nx.addEventListener('click', function () { go(1); });
+    tr.addEventListener('scroll', upd);
+    tr.addEventListener('keydown', function (e) { if (e.key === 'ArrowRight') { go(1); e.preventDefault(); } else if (e.key === 'ArrowLeft') { go(-1); e.preventDefault(); } });
+    window.addEventListener('load', upd); window.addEventListener('hashchange', function () { setTimeout(upd, 50); }); upd();
+  })();
+
+  /* ---------- copy email ---------- */
+  document.querySelectorAll('[data-copy]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var tag = b.parentNode.querySelector('.copied');
+      try {
+        navigator.clipboard.writeText(b.dataset.copy).then(function () { tag.textContent = 'Copied 복사됨'; }, function () { tag.textContent = 'Select and copy 직접 복사해주세요'; });
+      } catch (e) { tag.textContent = 'Select and copy 직접 복사해주세요'; }
+    });
+  });
+
+  route();
+})();
+</script>
+</body>
+</html>
