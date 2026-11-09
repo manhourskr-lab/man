@@ -64,19 +64,20 @@ em { font-style: italic; color: var(--gold); }
 header { position: sticky; top: 0; z-index: 20; background: var(--brand); border-bottom: 1px solid #0f4a2c; }
 header nav a { color: var(--on-dark-muted); }
 header nav a:hover, header nav a[aria-current="page"] { color: var(--on-dark); border-bottom-color: var(--on-dark); }
-.logoband { background: var(--brand); padding: 44px 0; line-height: 0; }
-.logoband img { height: 130px; width: auto; display: block; margin: 0 auto; }
+.logoband { background: var(--brand); padding: 72px 0; line-height: 0; }
+.logoband img { width: min(760px, 70%); height: auto; display: block; margin: 0 auto; }
 .teal em, footer em { color: var(--mint); }
 .bar { display: flex; align-items: center; justify-content: space-between; gap: 24px; min-height: 68px; }
-.logo { display: block; line-height: 0; height: 68px; overflow: hidden; }
-.logo img { height: 84px; width: auto; display: block; margin: -8px 0; }
+.logo { display: flex; align-items: center; line-height: 0; height: 68px; }
+.logo img { height: 26px; width: auto; display: block; margin: 0; }
 .vband { position: relative; height: clamp(300px, 34vw, 460px); background: var(--deep); overflow: hidden; border-bottom: 1px solid var(--line); }
 .vband video, .vband canvas { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; aspect-ratio: auto; }
 .vband video { display: none; }
 .vband img.bandimg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: none; }
 .vband.tall { height: clamp(460px, 56vw, 780px); }
-.vband.tall .herotext { background: linear-gradient(rgba(0,31,15,0) 55%, rgba(0,31,15,.55)); justify-content: flex-end; padding-bottom: 36px; gap: 12px; }
-.vband.tall .herotext h1 .en { font-size: clamp(24px, 2.6vw, 34px); }
+body:has(#v-home.on) .vband { cursor: pointer; }
+.vband.tall .herotext { background: linear-gradient(rgba(0,31,15,.3), rgba(0,31,15,.5)); justify-content: center; padding-bottom: 0; gap: 28px; }
+.vband.tall .herotext h1 .en { font-size: clamp(40px, 4.6vw, 64px); }
 .vband.tall .herotext .btn { padding: 8px 22px; }
 .vband.tall .herotext h1 .ko { margin-top: 8px; }
 .vband .tag { position: absolute; right: 16px; bottom: 10px; font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--on-dark-muted); }
@@ -84,8 +85,13 @@ header nav a:hover, header nav a[aria-current="page"] { color: var(--on-dark); b
 .herotext h1 .en { font-family: var(--f-display); font-style: normal; font-weight: 500; text-transform: uppercase; letter-spacing: .06em; font-size: clamp(34px, 4.6vw, 62px); line-height: 1.12; }
 .herotext h1 .ko { margin-top: 14px; font-size: clamp(16px, 1.8vw, 22px); color: var(--on-dark-muted); }
 .herotext .btn:hover { background: var(--on-dark); color: var(--brand); }
+
 .statement .label, .collective .label, .teamstrip .label { text-align: center; }
 .collective { text-align: center; }
+.band.collective { border-top: 1px solid var(--gold); }
+.band.collective h2 .en { font-size: clamp(62px, 8.2vw, 108px); line-height: 1.08; max-width: 15em; margin: 0 auto; }
+.band.collective h2 .en em { font-style: italic; }
+.band.collective h2 .ko { font-size: 21px; color: var(--muted); margin-top: 26px; }
 .collective h2 .en { font-style: normal; font-size: clamp(44px, 6.6vw, 84px); }
 .collective h2 .ko { margin-top: 18px; }
 .loopvid { display: block; width: 100%; max-width: 1100px; height: auto; margin: 56px auto 0; background: #0b1a11; }
@@ -100,6 +106,7 @@ header nav a:hover, header nav a[aria-current="page"] { color: var(--on-dark); b
 .portrait img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 20%; }
 .learn { display: inline-block; margin-top: 12px; font-size: 11px; letter-spacing: .18em; text-transform: uppercase; border-bottom: 1px solid var(--ink); padding-bottom: 2px; }
 .statement.who { padding-top: 104px; }
+.statement.who p.big { font-size: clamp(38px, 5.8vw, 76px); line-height: 1.18; max-width: 18em; }
 .pillars { padding-top: 112px; }
 .has-mark .mark { top: -40px; left: -70px; }
 h2.center { text-align: center; }
@@ -212,6 +219,22 @@ h1.center .ko { margin-top: 14px; }
 .arrow:hover { background: var(--ink); color: #fff; }
 .capt { display: none; text-align: center; font-family: var(--f-display); font-style: italic; font-size: 17px; color: var(--muted); margin-top: 18px; min-height: 28px; }
 @media (prefers-reduced-motion: reduce) { .track { transition: none; } }
+#v-careers .car { margin-top: 56px; }
+.cform { max-width: 680px; margin: 0 auto; padding: 56px 0 96px; }
+.cform .row { margin-bottom: 30px; }
+.cform .lb { display: block; font-size: 14px; font-weight: 500; margin-bottom: 10px; color: var(--ink); }
+.cform .lb .ko { display: inline; font-weight: 300; font-size: 13px; color: var(--muted); margin-left: 8px; }
+.cform .req { color: #c0392b; margin-left: 2px; }
+.cform input[type=text], .cform input[type=email], .cform input[type=tel], .cform textarea { font: inherit; font-size: 16px; padding: 14px; border: 1px solid var(--line); background: #fbfaf7; color: var(--ink); width: 100%; border-radius: 0; }
+.cform textarea { min-height: 150px; resize: vertical; }
+.cform .phone { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+.cform .two { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.cform .check { margin-top: 0; border-top: 1px solid var(--line); }
+.cform .submit { display: block; width: 100%; padding: 20px; background: var(--brand); color: var(--on-dark); border: 1px solid var(--brand); font-size: 14px; letter-spacing: .14em; cursor: pointer; text-align: center; transition: background .2s; }
+.cform .submit .ko { font-size: 12px; letter-spacing: .04em; opacity: .85; margin-top: 2px; }
+.cform .submit:hover { background: var(--ink); border-color: var(--ink); }
+.cform .err { color: #9a2f27; font-size: 13px; margin-top: 12px; min-height: 1.2em; }
+.cform .note { margin-top: 6px; }
 .pricegrid { display: grid; grid-template-columns: repeat(3, 1fr); margin-top: 48px; border: 1px solid var(--line); background: #f6f4ef; }
 .pcell { padding: 28px 32px 30px; border-left: 1px solid var(--line); }
 .pcell:first-child { border-left: 0; }
@@ -251,7 +274,7 @@ h1.center .ko { margin-top: 14px; }
 .closing .body .closer { margin-top: 28px; font-weight: 500; color: var(--ink); }
 .closing .body .closer.ko { margin-top: 4px; }
 .has-mark { position: relative; overflow: hidden; }
-.has-mark .mark { position: absolute; top: -9%; left: -5%; width: clamp(440px, 72vw, 940px); height: auto; opacity: .1; pointer-events: none; user-select: none; }
+.has-mark .mark { position: absolute; top: -3%; left: 0%; width: clamp(440px, 72vw, 940px); height: auto; opacity: .2; pointer-events: none; user-select: none; }
 .has-mark .wrap { position: relative; }
 nav { display: flex; gap: 28px; font-size: 12px; letter-spacing: .16em; text-transform: uppercase; }
 nav a { padding: 6px 0; border-bottom: 1px solid transparent; color: var(--muted); }
@@ -453,20 +476,21 @@ footer nav a:hover { color: var(--on-dark); border-bottom-color: var(--on-dark);
 
 <header>
   <div class="wrap bar">
-    <a class="logo" href="#home" id="logo"><img src="logo.png" alt="MANHOUR, the 10,000-hour principle"></a>
+    <a class="logo" href="#home" id="logo"><img src="logo.png" alt="10000HOUR"></a>
     <nav aria-label="Main">
       <a href="#about" data-nav="about">About</a>
       <a href="#develop-with-us" data-nav="develop-with-us">Develop with us</a>
       <a href="#partner" data-nav="partner">Partner</a>
       <a href="#careers" data-nav="careers">Careers</a>
       <a href="#studio" data-nav="studio">Studio</a>
+      <a href="#contact" data-nav="contact">Contact</a>
     </nav>
   </div>
 </header>
 
 <!-- Video band: same on every menu. To use a real video, set its file in VIDEOS in the script below. -->
-<div class="vband" id="vband"><canvas id="bandc" aria-hidden="true"></canvas><img id="bandimg" class="bandimg" alt="" aria-hidden="true"><video id="bandv" muted loop playsinline preload="metadata" aria-hidden="true"></video>
-  <div class="herotext" id="herotext"><h1><span class="en">Ten thousand hours.<br>One brand.</span><span class="ko">1만 시간, 하나의 브랜드.</span></h1><a class="btn" href="#about"><span class="en">About</span><span class="ko">소개</span></a></div>
+<div class="vband" id="vband" role="link" tabindex="0" aria-label="About"><canvas id="bandc" aria-hidden="true"></canvas><img id="bandimg" class="bandimg" alt="" aria-hidden="true"><video id="bandv" muted loop playsinline preload="metadata" aria-hidden="true"></video>
+  <div class="herotext" id="herotext"><h1><span class="en">Our Hours.<br>Your Advantage.</span><span class="ko">우리의 시간이, 당신의 경쟁력이 됩니다.</span></h1></div>
   <div class="herotext ital" id="abouttext"><h1><span class="en">MANHOUR is the studio that stays with <em>one brand</em> for ten thousand hours.</span><span class="ko">만아워는 하나의 브랜드와 1만 시간을 함께하는 스튜디오입니다.</span></h1></div>
   <span class="tag" id="bandtag">Video placeholder</span></div>
 
@@ -475,16 +499,16 @@ footer nav a:hover { color: var(--on-dark); border-bottom-color: var(--on-dark);
 <div class="view on" id="v-home">
   <section class="statement who">
     <div class="wrap">
-      <p class="label">Who we are · 만아워는</p>
+      <p class="label">Who we are</p>
       <p class="big">MANHOUR is a café &amp; F&amp;B consulting studio that stays with <em>one brand</em> for <em>ten thousand hours</em>, from <em>analysis</em> to <em>aftercare</em>.</p>
       <p class="kr">하나의 브랜드와 1만 시간을 함께하는 카페·F&amp;B 컨설팅 스튜디오입니다. 분석부터 사후관리까지 끝까지 곁에 있습니다.</p>
-      <div class="cta"><a class="btn" href="#about"><span class="en">Learn more</span><span class="ko">더 알아보기</span></a></div>
+      <div class="cta"><a class="btn" href="#develop-with-us"><span class="en">Learn more</span><span class="ko">더 알아보기</span></a></div>
     </div>
   </section>
 
   <section class="band collective">
     <div class="wrap">
-      <h2><span class="en"><em style="white-space:nowrap">The 10,000-hour</em> principle</span><span class="ko">컨설팅을 위한 만 시간의 법칙</span></h2>
+      <h2><span class="en">We give you your most valuable <em>10,000 hours</em>.</span><span class="ko">가장 값진 만 시간을 드립니다.</span></h2>
       <video class="loopvid" src="principle.mp4" poster="principle-poster.jpg" autoplay muted loop playsinline preload="auto" aria-label="Analysis, execution and aftercare loop over 10,000 hours, which equals 416.667 days"></video>
     </div>
   </section>
@@ -506,7 +530,7 @@ footer nav a:hover { color: var(--on-dark); border-bottom-color: var(--on-dark);
     <div class="wrap">
       <h2><span class="en">Develop <em>with</em> us</span><span class="ko">함께 만들어갑니다</span></h2>
       <div class="body" style="margin-top:24px"><p class="en">Opening a café or an F&amp;B brand? Tell us about your store and we will show how we would approach it.</p><p class="ko">카페나 F&amp;B 브랜드를 준비 중이신가요? 매장 이야기를 들려주시면 진행 방향을 정리해 드립니다.</p></div>
-      <div class="cta"><a class="btn" href="#develop-with-us"><span class="en">Learn more</span><span class="ko">자세히 보기</span></a></div>
+      <div class="cta"><a class="btn" href="https://mail.google.com/mail/?view=cm&fs=1&to=10000hours%40gmail.com&su=Inquiry" target="_blank" rel="noopener"><span class="en">Inquire</span><span class="ko">문의하기</span></a></div>
     </div>
   </div>
 </div>
@@ -574,7 +598,7 @@ footer nav a:hover { color: var(--on-dark); border-bottom-color: var(--on-dark);
     <div class="wrap">
       <h2><span class="en">Develop <em>with</em> us</span><span class="ko">함께 만들어갑니다</span></h2>
       <div class="body" style="margin-top:24px"><p class="en">Opening a café or an F&amp;B brand? Tell us about your store and we will show how we would approach it.</p><p class="ko">카페나 F&amp;B 브랜드를 준비 중이신가요? 매장 이야기를 들려주시면 진행 방향을 정리해 드립니다.</p></div>
-      <div class="cta"><a class="btn" href="#develop-with-us"><span class="en">Learn more</span><span class="ko">자세히 보기</span></a></div>
+      <div class="cta"><a class="btn" href="https://mail.google.com/mail/?view=cm&fs=1&to=10000hours%40gmail.com&su=Inquiry" target="_blank" rel="noopener"><span class="en">Inquire</span><span class="ko">문의하기</span></a></div>
     </div>
   </div>
 </div>
@@ -660,7 +684,7 @@ footer nav a:hover { color: var(--on-dark); border-bottom-color: var(--on-dark);
     <div class="wrap">
       <h1 class="center"><span class="en">Our <em>partners</em></span><span class="ko">파트너</span></h1>
       <p class="pdesc">A café opens with many hands. We work with trusted specialists in each field and coordinate them as one team.<br><span class="ko-s">카페 하나가 문을 열기까지 많은 전문가가 필요합니다. 각 분야의 검증된 파트너와 하나의 팀처럼 움직입니다.</span></p>
-      <div class="pcols"><div class="pcol"><div class="plogo"><span class="wm">Photo studio</span><span class="phtag2">Logo to come</span></div><h3><span class="en">Photo studio</span><span class="ko">사진 스튜디오</span></h3><p>Store and food photography for your brand.<br><span class="ko-s">브랜드를 위한 매장·음식 촬영을 맡습니다.</span></p><a class="btn" href="mailto:10000hours@gmail.com?subject=Partner%20inquiry"><span class="en">Inquire</span><span class="ko">문의하기</span></a></div><div class="pcol"><div class="plogo"><span class="wm">First Class</span><span class="phtag2">Logo to come</span></div><h3><span class="en">First Class</span><span class="ko">퍼스트클래스</span></h3><p>Branding studio for logo and website production.<br><span class="ko-s">로고와 홈페이지 제작을 맡는 브랜딩 회사입니다.</span></p><a class="btn" href="mailto:10000hours@gmail.com?subject=Partner%20inquiry"><span class="en">Inquire</span><span class="ko">문의하기</span></a></div><div class="pcol"><div class="plogo"><span class="wm">Company name to come</span><span class="phtag2">Logo to come</span></div><h3><span class="en">Company name to come</span><span class="ko">회사명 (경남)</span></h3><p>Interior design partner based in Gyeongnam.<br><span class="ko-s">경남에 기반을 둔 인테리어 파트너입니다.</span></p><a class="btn" href="mailto:10000hours@gmail.com?subject=Partner%20inquiry"><span class="en">Inquire</span><span class="ko">문의하기</span></a></div></div>
+      <div class="pcols"><div class="pcol"><div class="plogo"><span class="wm">Photo studio</span><span class="phtag2">Logo to come</span></div><h3><span class="en">Photo studio</span><span class="ko">사진 스튜디오</span></h3><p>Store and food photography for your brand.<br><span class="ko-s">브랜드를 위한 매장·음식 촬영을 맡습니다.</span></p><a class="btn" href="mailto:10000hours@gmail.com?subject=Partner%20inquiry"><span class="en">Inquire</span><span class="ko">문의하기</span></a></div><div class="pcol"><div class="plogo" style="background:#ff6f61;overflow:hidden"><img src="partners/firstclass.png" alt="First Class F/C" style="display:block;width:120px;height:120px;max-width:none"></div><h3><span class="en">First Class</span><span class="ko">퍼스트클래스</span></h3><p>Branding studio for logo and website production.<br><span class="ko-s">로고와 홈페이지 제작을 맡는 브랜딩 회사입니다.</span></p><a class="btn" href="mailto:10000hours@gmail.com?subject=Partner%20inquiry"><span class="en">Inquire</span><span class="ko">문의하기</span></a></div><div class="pcol"><div class="plogo" style="background:#114291"><img src="partners/bluepin.png" alt="bluepin" style="display:block;width:100%;height:100%;object-fit:contain"></div><h3><span class="en">Bluepin</span><span class="ko">블루핀</span></h3><p>Interior design partner based in Gyeongnam.<br><span class="ko-s">경남에 기반을 둔 인테리어 파트너입니다.</span></p><a class="btn" href="mailto:10000hours@gmail.com?subject=Partner%20inquiry"><span class="en">Inquire</span><span class="ko">문의하기</span></a></div></div>
     </div>
   </section>
   <section class="band">
@@ -675,10 +699,9 @@ footer nav a:hover { color: var(--on-dark); border-bottom-color: var(--on-dark);
 
 <!-- ============ CAREERS ============ -->
 <div class="view" id="v-careers">
-  <section class="ptop" style="padding-bottom:56px">
+  <section class="ptop" style="padding-bottom:0">
     <div class="wrap">
-      <h1 class="center"><span class="en"><em>Careers</em></span><span class="ko">만아워의 커리어</span></h1>
-      <p class="pdesc">Open roles are being prepared. To introduce yourself in the meantime, write to us.<br><span class="ko-s">채용 공고를 준비하고 있습니다. 그 전에 자기소개를 보내주셔도 좋습니다.</span></p>
+      <h1 class="center"><span class="en"><em>Careers</em></span></h1>
     </div>
   </section>
   <div class="car" id="car" role="region" aria-roledescription="carousel" aria-label="Photos">
@@ -825,6 +848,47 @@ footer nav a:hover { color: var(--on-dark); border-bottom-color: var(--on-dark);
     </div>
   </section>
 </div>
+<!-- ============ CONTACT ============ -->
+<div class="view" id="v-contact">
+  <div class="pagehead"><div class="wrap">
+    <h1><span class="en"><em>Contact</em></span><span class="ko">문의하기</span></h1>
+    <div class="body">
+      <p class="en">Tell us about your project. We reply with how we would approach it.</p>
+      <p class="ko">프로젝트 이야기를 들려주시면 진행 방향을 정리해 답변드립니다.</p>
+    </div>
+  </div></div>
+  <section style="padding:0">
+    <div class="wrap">
+      <form class="cform" id="cform">
+        <div class="row"><label class="lb" for="cf-name">Project / Company name<span class="req">*</span><span class="ko">프로젝트명 / 기업명</span></label><input type="text" id="cf-name" required></div>
+        <div class="row"><label class="lb" for="cf-web">Website or SNS<span class="ko">웹사이트 또는 SNS</span></label><input type="text" id="cf-web"></div>
+        <div class="row"><label class="lb" for="cf-issue">What is the main problem you want to solve?<span class="req">*</span><span class="ko">가장 해결하고 싶은 문제는 무엇인가요?</span></label><textarea id="cf-issue" required></textarea></div>
+        <div class="row">
+          <p class="lb">Services you need (multiple allowed)<span class="req">*</span><span class="ko">필요한 서비스를 선택해주세요 (중복 선택 가능)</span></p>
+          <ul class="check">
+            <li><label><input type="checkbox" name="svc" value="분석·기획 (Analysis & planning)"><span>Analysis &amp; planning<span class="ko">분석·기획 (상권·매출·매장·마케팅 분석)</span></span></label></li>
+            <li><label><input type="checkbox" name="svc" value="실행·보조 (Execution & support)"><span>Execution &amp; support<span class="ko">실행·보조 (현장·마케팅 컨설팅, 콘텐츠, 레시피 교육, 유통 설계)</span></span></label></li>
+            <li><label><input type="checkbox" name="svc" value="사후관리 (Aftercare)"><span>Aftercare<span class="ko">사후관리 (데이터 관리, 월간 개선안)</span></span></label></li>
+            <li><label><input type="checkbox" name="svc" value="커피머신·장비·집기·가구 (Coffee machines, equipment & furniture)"><span>Coffee machines, equipment &amp; furniture<span class="ko">커피머신·장비·집기·가구</span></span></label></li>
+            <li><label><input type="checkbox" name="svc" value="촬영·체험단 (Photography & review campaigns)"><span>Photography &amp; review campaigns<span class="ko">촬영·체험단</span></span></label></li>
+            <li><label><input type="checkbox" name="svc" value="로고·홈페이지 제작 (Logo & website)"><span>Logo &amp; website<span class="ko">로고·홈페이지 제작</span></span></label></li>
+            <li><label><input type="checkbox" name="svc" value="인력 아웃소싱 (Staffing outsourcing)"><span>Staffing outsourcing<span class="ko">인력 아웃소싱</span></span></label></li>
+            <li><label><input type="checkbox" name="svc" value="해외 사업자 한국 정착 지원 (Support for overseas owners)"><span>Support for overseas owners opening in Korea<span class="ko">해외 사업자 한국 정착 지원</span></span></label></li>
+            <li><label><input type="checkbox" name="svc" id="cf-other-ck" value="기타 (Other)"><span>Other<span class="ko">기타</span></span></label><input type="text" id="cf-other" placeholder="Please specify 직접입력" style="margin:0 0 12px 32px;width:calc(100% - 32px)"></li>
+          </ul>
+        </div>
+        <div class="row"><label class="lb" for="cf-person">Contact person / title<span class="req">*</span><span class="ko">담당자 성함 / 직책</span></label><input type="text" id="cf-person" required></div>
+        <div class="row two">
+          <div><label class="lb" for="cf-p1">Mobile phone<span class="req">*</span><span class="ko">휴대전화 번호</span></label><div class="phone"><input type="tel" id="cf-p1" inputmode="numeric" maxlength="3" required aria-label="Phone part 1"><input type="tel" id="cf-p2" inputmode="numeric" maxlength="4" required aria-label="Phone part 2"><input type="tel" id="cf-p3" inputmode="numeric" maxlength="4" required aria-label="Phone part 3"></div></div>
+          <div><label class="lb" for="cf-email">Email<span class="req">*</span><span class="ko">이메일</span></label><input type="email" id="cf-email" required></div>
+        </div>
+        <button class="submit" type="submit"><span class="en">Send inquiry</span><span class="ko">프로젝트 문의하기</span></button>
+        <p class="err" id="cf-err" role="alert"></p>
+        <p class="note" id="cf-msg" aria-live="polite">Submitting opens an email draft addressed to 10000hours@gmail.com. Attach any reference files there.<br><span class="ko-s">보내기를 누르면 10000hours@gmail.com 앞으로 내용이 채워진 메일 작성창이 열립니다. 참고 자료는 그 작성창에서 참부해 주세요.</span></p>
+      </form>
+    </div>
+  </section>
+</div>
 </main>
 
 <footer>
@@ -832,7 +896,7 @@ footer nav a:hover { color: var(--on-dark); border-bottom-color: var(--on-dark);
     <div><a class="logo" href="#home"><img src="logo.png" alt="MANHOUR" style="height:48px"></a><p style="margin-top:12px">© 2026 MANHOUR. Business registration details to follow.<br>사업자 정보는 등록 후 기재합니다.</p></div>
     <div>
       <nav aria-label="Footer" style="flex-wrap:wrap">
-        <a href="#about">About</a><a href="#develop-with-us">Develop with us</a><a href="#partner">Partner</a><a href="#careers">Careers</a><a href="#studio">Studio</a>
+        <a href="#about">About</a><a href="#develop-with-us">Develop with us</a><a href="#partner">Partner</a><a href="#careers">Careers</a><a href="#studio">Studio</a><a href="#contact">Contact</a>
       </nav>
       <p style="margin-top:16px">10000hours@gmail.com</p>
     </div>
@@ -842,7 +906,7 @@ footer nav a:hover { color: var(--on-dark); border-bottom-color: var(--on-dark);
 <script>
 (function () {
   /* ---------- routing (plain #name hashes) ---------- */
-  var VIEWS = ['home', 'about', 'develop-with-us', 'partner', 'careers', 'studio'];
+  var VIEWS = ['home', 'about', 'develop-with-us', 'partner', 'careers', 'studio', 'contact'];
   function route() {
     var h = (location.hash || '#home').slice(1);
     if (VIEWS.indexOf(h) < 0) h = 'home';
@@ -863,8 +927,8 @@ footer nav a:hover { color: var(--on-dark); border-bottom-color: var(--on-dark);
   /* ---------- video band under the nav ----------
      Put one video file per menu here (e.g. 'video/home.mp4') and publish the files with the page.
      Empty string = animated placeholder. */
-  var VIDEOS = { 'home': '', 'about': '', 'develop-with-us': '', 'partner': '', 'careers': '', 'studio': '' };
-  var MODES = { 'home': 'grid', 'about': 'lines', 'develop-with-us': 'rings', 'partner': 'net', 'careers': 'steps', 'studio': 'bars' };
+  var VIDEOS = { 'home': '', 'about': '', 'develop-with-us': '', 'partner': '', 'careers': '', 'studio': '', 'contact': '' };
+  var MODES = { 'home': 'grid', 'about': 'lines', 'develop-with-us': 'rings', 'partner': 'net', 'careers': 'steps', 'studio': 'bars', 'contact': 'lines' };
   var bandC = document.getElementById('bandc'), bandV = document.getElementById('bandv'), bandTag = document.getElementById('bandtag');
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var raf = 0, curMode = 'grid', nodes = [];
@@ -1160,6 +1224,52 @@ footer nav a:hover { color: var(--on-dark); border-bottom-color: var(--on-dark);
     tr.addEventListener('scroll', upd);
     tr.addEventListener('keydown', function (e) { if (e.key === 'ArrowRight') { go(1); e.preventDefault(); } else if (e.key === 'ArrowLeft') { go(-1); e.preventDefault(); } });
     window.addEventListener('load', upd); window.addEventListener('hashchange', function () { setTimeout(upd, 50); }); upd();
+  })();
+
+  /* ---------- contact form -> Gmail compose ---------- */
+  (function () {
+    var f = document.getElementById('cform');
+    if (!f) return;
+    function val(id) { return (document.getElementById(id).value || '').trim(); }
+    ['cf-p1', 'cf-p2'].forEach(function (id, i) {
+      var el = document.getElementById(id), nx = document.getElementById(i ? 'cf-p3' : 'cf-p2');
+      el.addEventListener('input', function () { el.value = el.value.replace(/\D/g, ''); if (el.value.length >= el.maxLength) nx.focus(); });
+    });
+    document.getElementById('cf-p3').addEventListener('input', function () { this.value = this.value.replace(/\D/g, ''); });
+    f.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var err = document.getElementById('cf-err'), msg = document.getElementById('cf-msg');
+      err.textContent = '';
+      var svcs = [].slice.call(f.querySelectorAll('input[name=svc]:checked')).map(function (c) {
+        return c.id === 'cf-other-ck' && val('cf-other') ? c.value + ': ' + val('cf-other') : c.value;
+      });
+      if (!svcs.length) { err.textContent = 'Please choose at least one service. 필요한 서비스를 하나 이상 선택해주세요.'; return; }
+      var name = val('cf-name');
+      var body = [
+        '[프로젝트명 / 기업명] ' + name,
+        '[웹사이트 / SNS] ' + (val('cf-web') || '-'),
+        '[해결하고 싶은 문제]\n' + val('cf-issue'),
+        '[필요한 서비스]\n- ' + svcs.join('\n- '),
+        '[담당자 성함 / 직책] ' + val('cf-person'),
+        '[휴대전화] ' + val('cf-p1') + '-' + val('cf-p2') + '-' + val('cf-p3'),
+        '[이메일] ' + val('cf-email')
+      ].join('\n\n');
+      var url = 'https://mail.google.com/mail/?view=cm&fs=1&to=' + encodeURIComponent('10000hours@gmail.com') + '&su=' + encodeURIComponent('[문의] ' + name) + '&body=' + encodeURIComponent(body);
+      var a = document.createElement('a'); a.href = url; a.target = '_blank'; a.rel = 'noopener'; document.body.appendChild(a); a.click(); a.remove();
+      msg.innerHTML = 'An email draft should open in a new tab. If it does not, send the text below to 10000hours@gmail.com.<br><span class="ko-s">메일 작성창이 새 탭에 열리지 않으면 아래 버튼으로 내용을 복사해 10000hours@gmail.com으로 보내주세요.</span> <button class="linkbtn" type="button" id="cf-copy">Copy text 내용 복사</button>';
+      document.getElementById('cf-copy').addEventListener('click', function () {
+        try { navigator.clipboard.writeText(body).then(function () { document.getElementById('cf-copy').textContent = 'Copied 복사됨'; }); } catch (x) { document.getElementById('cf-copy').textContent = 'Copy failed 복사 실패'; }
+      });
+    });
+  })();
+
+  /* ---------- top video band: home -> About ---------- */
+  (function () {
+    var vb = document.getElementById('vband');
+    if (!vb) return;
+    function toAbout() { if (!location.hash || location.hash === '#home') location.hash = '#about'; }
+    vb.addEventListener('click', toAbout);
+    vb.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toAbout(); } });
   })();
 
   /* ---------- copy email ---------- */
